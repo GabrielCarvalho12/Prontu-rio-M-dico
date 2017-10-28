@@ -1,6 +1,7 @@
-<?php include "../../Controller/Control.php";
+<?php require "../../Controller/Control.php";
 $con = new  Control();
 $con->estados();
+$con->especialidades();
 ?>
 <!DOCTYPE html>
 <!--
@@ -124,7 +125,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <li class="header"></li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="Agendamento.php"><i class="fa fa-book"></i> <span>Agendamento</span></a></li>
-        <li><a href="Atendimento.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimento</span></a></li>
+        <li><a href="AdmConsultas.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Consultas</span></a></li>
         <li class="active treeview">
           <a href="#"><i class="fa fa-user-plus"></i> <span>Cadastrar</span>
             <span class="pull-right-container">
@@ -157,13 +158,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="box-header with-border">
           <h3 class="box-title">Cadastro Médico</h3>
         </div>
+
+     <form action="../../Controller/controller.php" method="GET">
+
         <!-- /.box-header -->
         <div class="box-body" align="center">
           <div class="row" align="left">
             <div class="col-md-3" >
               <div class="form-group" >
                 <label for="CRM">CRM:</label>
-                <input class="form-control" id="CRM" placeholder="CRM">
+                <input class="form-control" name="crm" placeholder="CRM">
               </div>
 
             </div>
@@ -171,7 +175,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-md-3">
               <div class="form-group">
                 <label for="Nome">Nome:</label>
-                <input class="form-control" id="Nome" placeholder="Nome">
+                <input class="form-control" name="nome" placeholder="Nome">
               </div>
 
             </div>
@@ -179,7 +183,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-md-3">
               <div class="form-group">
                 <label for="Endereço">Endereço:</label>
-                <input class="form-control" id="Endereço" placeholder="Endereço">
+                <input class="form-control" name="endereco" placeholder="Endereço">
               </div>
 
             </div>
@@ -187,7 +191,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-md-3">
               <div class="form-group">
                 <label for="Bairro">Bairro:</label>
-                <input class="form-control" id="Bairro" placeholder="Bairro">
+                <input class="form-control" name="bairro" placeholder="Bairro">
               </div>
             </div>
             <!-- /.col -->
@@ -195,7 +199,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
               <div class="form-group">
                 <label for="Complemento">Complemento:</label>
-                <input class="form-control" id="Complemento" placeholder="Complemento">
+                <input class="form-control" name="complemento" placeholder="Complemento">
               </div>
 
             </div>
@@ -203,7 +207,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-md-3">
               <div class="form-group">
                   <label for="estados">Estado:</label>
-                  <select class="form-control" name="estados" id="estados" style="width: 100%">
+                  <select class="form-control" name="estado" id="estados" style="width: 100%">
 
                       <?php
                       while ( $row = mysqli_fetch_assoc( $con->query) ) {
@@ -218,7 +222,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-md-3">
               <div class="form-group">
                   <label for="cidades">Cidade:</label>
-                  <select class="form-control" name="cidades" id="cidades" style="width: 100%;">
+                  <select class="form-control" name="cidade" id="cidades" style="width: 100%;">
                       <option value="">Selecione um estado </option>
                   </select>
               </div>
@@ -228,7 +232,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <div class="form-group">
                 <label>CEP:</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" data-inputmask='"mask":"99.999-999"' data-mask>
+                  <input name="cep" type="text" class="form-control" data-inputmask='"mask":"99.999-999"' data-mask>
                 </div>
               </div>
             </div>
@@ -237,7 +241,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <div class="form-group">
                 <label>CPF:</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" data-inputmask='"mask":"999.999.999-99"' data-mask>
+                  <input name="cpf" type="text" class="form-control" data-inputmask='"mask":"999.999.999-99"' data-mask>
                 </div>
               </div>
             </div>
@@ -246,7 +250,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <div class="form-group">
                 <label>RG:</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" data-inputmask='"mask":"999999999999-9"' data-mask>
+                  <input name="rg" type="text" class="form-control" data-inputmask='"mask":"999999999999-9"' data-mask>
                 </div>
               </div>
             </div>
@@ -259,7 +263,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control pull-right" id="datepicker">
+                  <input name="data_nascimento"  class="form-control pull-right" id="datepicker">
                 </div>
                 <!-- /.input group -->
               </div>
@@ -269,21 +273,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-md-3">
               <div class="form-group">
                 <label for="Naturalidade">Naturalidade:</label>
-                <input class="form-control" id="Naturalidade" placeholder="Naturalidade">
+                <input name="naturalidade" class="form-control" id="Naturalidade" placeholder="Naturalidade">
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="form-group">
                 <label for="Nacionalidade">Nacionalidade:</label>
-                <input class="form-control" id="Nacionalidade" placeholder="Nacionalidade">
+                <input name="nacionalidade" class="form-control" id="Nacionalidade" placeholder="Nacionalidade">
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="form-group">
                 <label for="Email">Email:</label>
-                <input class="form-control" id="Email" placeholder="Email">
+                <input name="email" class="form-control" id="Email" placeholder="Email">
               </div>
             </div>
 
@@ -294,7 +298,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <div class="input-group-addon">
                     <i class="fa fa-phone"></i>
                   </div>
-                  <input type="text" class="form-control" data-inputmask='"mask":"(99)9999-9999"' data-mask>
+                  <input name="telefone" type="text" class="form-control" data-inputmask='"mask":"(99)9999-9999"' data-mask>
                 </div>
               </div>
             </div>
@@ -306,7 +310,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <div class="input-group-addon">
                     <i class="fa fa-phone"></i>
                   </div>
-                  <input type="text" class="form-control" data-inputmask='"mask":"(99)99999-9999"' data-mask>
+                  <input name="celular" type="text" class="form-control" data-inputmask='"mask":"(99)99999-9999"' data-mask>
                 </div>
               </div>
             </div>
@@ -314,24 +318,66 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-md-3">
               <div class="form-group">
                 <label for="Trabalho">Trabalho:</label>
-                <input class="form-control" id="Trabalho" placeholder="Email">
+                <input name="trabalho" class="form-control" id="Trabalho" placeholder="Email">
               </div>
             </div>
 
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="Especialidade">Especialidade:</label>
-                <input class="form-control" id="Especialidade" placeholder="Email">
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label for="especialidades">Especialidades:</label>
+                      <select  class="form-control select2" multiple="multiple" name="especialidades[]"  style="width: 100%">
+
+                          <?php
+                          while ( $row = mysqli_fetch_assoc( $con->espec) ) {
+                              echo '<option value="'.$row['id'].'">'.utf8_encode($row['nome']).'</option>';
+                          }
+                          ?>
+
+                      </select>
+                  </div>
               </div>
-            </div>
 
           </div>
           <!-- /.row -->
           <div style="width: 25%;">
-            <button type="button" class="btn btn-block btn-primary">Cadastrar</button>
+            <button type="submit" name="enviar" value="InserirMedico" class="btn btn-block btn-primary">Cadastrar</button>
+
+              <div class="modal modal-info fade" id="modal-info">
+                  <div class="modal-dialog" style="margin-top: 15%">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span></button>
+                              <h2 class="modal-title">Médico cadastrado com sucesso.</h2>
+                          </div>
+                      </div>
+                      <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+              </div>
+              <!-- /.modal -->
+
+              <div class="modal modal-danger fade" id="modal-danger">
+                  <div class="modal-dialog" style="margin-top: 15%">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title">Erro ao cadastar: <?php print($_GET['erro']); ?> </h4>
+                          </div>
+                      </div>
+                      <!-- /.modal-content -->
+                  </div>
+                  <!-- /.modal-dialog -->
+              </div>
+              <!-- /.modal -->
+
+
           </div>
         </div>
         <!-- /.box-body -->
+     </form>
+
       </div>
       <!-- /.box -->
 
@@ -355,8 +401,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-<script type="text/javascript" src="../../../public/dist/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="../../../public/dist/js/funcao.js"></script>
+<script type="text/javascript" src="../../../public/dist/js/CidEstd/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../../public/dist/js/CidEstd/funcao.js"></script>
 <!-- jQuery 3 -->
 <script src="../../../public/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -394,9 +440,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         $('.select2').select2()
 
         //Datemask dd/mm/yyyy
-        $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+        $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'yyyy/mm/dd' })
         //Datemask2 mm/dd/yyyy
-        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'yyyy/mm/dd' })
         //Money Euro
         $('[data-mask]').inputmask()
 
@@ -456,4 +502,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
     })
 </script>
 </body>
+
+<?php
+if (!empty($_GET['valor'])) {
+    $resultado = $_GET['valor'];
+
+    if ($resultado == 1) {
+        ?>
+
+        <script>
+            $(document).ready(function () {
+                $("#modal-info").modal();
+            });
+        </script>
+    <?php
+
+    }elseif ($resultado == 2){
+    ?>
+
+        <script>
+            $(document).ready(function () {
+                $("#modal-danger").modal();
+            });
+        </script>
+
+        <?php
+    }
+}
+?>
+
 </html>

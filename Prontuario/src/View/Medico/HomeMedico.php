@@ -55,7 +55,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="../Adm/Home.php" class="logo">
+        <a href="HomeMedico.php" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"> <i class="fa fa-plus-square"></i><b> PM</b></span>
             <!-- logo for regular state and mobile devices -->
@@ -142,7 +142,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="icon">
                             <i class="fa fa-search"></i>
                         </div>
-                        <a href="../Adm/Agendamento.php" class="small-box-footer"> Listar <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="Consultas.php" class="small-box-footer"> Listar <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->

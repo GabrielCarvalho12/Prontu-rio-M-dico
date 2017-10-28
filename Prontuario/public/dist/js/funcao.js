@@ -4,7 +4,7 @@ $("#estados").change(function () {
     var id = $(this).val();
     $.ajax({
         type:"POST",
-        url:"src/View/../exibe_cidade.php?id="+id,
+        url:"exibe_cidade.php?id="+id,
         dataType:"text",
         success: function (res){
             $("#cidades").children(".cidades").remove();

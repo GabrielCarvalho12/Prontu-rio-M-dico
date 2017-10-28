@@ -1,4 +1,7 @@
-
+<?php
+require_once "../../Model/seguranca.php";
+protegePagina();
+?>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -131,7 +134,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   | Your Page Content Here |
   -------------------------->
             <!-- Small boxes (Stat box) -->
-            <div class="row" style="margin-top: 8%; margin-left: 10%">
+            <div class="row" style="margin-top: 5%; margin-left: 10%">
                 <div class="col-lg-5 col-xs-8">
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
@@ -146,7 +149,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-5 col-xs-6" style="margin-left: 4%">
+                <div class="col-lg-5 col-xs-6" style="margin-left: 2%">
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
                         <div class="inner">
@@ -161,7 +164,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-5 col-xs-6" style="margin-top: 4%">
+                <div class="col-lg-5 col-xs-6" style="margin-top: 2%">
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
                         <div class="inner">
@@ -176,7 +179,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-5 col-xs-6" style="margin-top: 4%; margin-left: 4%">
+                <div class="col-lg-5 col-xs-6" style="margin-top: 2%; margin-left: 2%">
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
                         <div class="inner">
@@ -191,6 +194,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
                 <!-- ./col -->
+
+                <div class="col-lg-5 col-xs-8" style="margin-top: 2%; margin-left: 24%" >
+                    <!-- small box -->
+                    <div class="small-box bg-light-blue">
+                        <div class="inner">
+                            <h3>Consultas</h3>
+                            <p>Listar todas as consultas</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-search"></i>
+                        </div>
+                        <a href="AdmConsultas.php" class="small-box-footer"> Listar <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+
             </div>
             <!-- /.row -->
 

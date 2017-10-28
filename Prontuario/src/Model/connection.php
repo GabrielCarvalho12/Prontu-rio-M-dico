@@ -1,19 +1,12 @@
 <?php
 
-class connection
+class connection{
+
+public $db;
+
+public function conect()
 {
-
-    private $db;
-
-    public function conect()
-    {
-        $this->db = mysqli_connect('localhost', 'root', '', "prontuario");
-        mysqli_select_db($this->db, "seletor de cidade");
-    }
-
-
-    public function getDb()
-    {
-        return $this->db;
-    }
+    $this->db = mysqli_connect('localhost', 'root', '', "prontuario");
+    mysqli_select_db($this->db, "seletor de cidade");
+}
 }

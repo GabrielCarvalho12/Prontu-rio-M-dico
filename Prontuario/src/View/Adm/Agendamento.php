@@ -1,3 +1,8 @@
+<?php include "../../Controller/Control.php";
+$con = new  Control();
+$con->MedPac();
+?>
+
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -121,7 +126,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <li class="header"></li>
                 <!-- Optionally, you can add icons to the links -->
                 <li class="active"><a href="Agendamento.php"><i class="fa fa-book"></i> <span>Agendamento</span></a></li>
-                <li><a href="Atendimento.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimento</span></a></li>
+                <li><a href="AdmConsultas.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Consultas</span></a></li>
                 <li class="treeview">
                     <a href="#"><i class="fa fa-user-plus"></i> <span>Cadastrar</span>
                         <span class="pull-right-container">
@@ -152,9 +157,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- SELECT2 EXAMPLE -->
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Select2</h3>
+                    <h3 class="box-title">Agendamento</h3>
                 </div>
-                <!-- /.box-header -->
+
+              <form action="../../Controller/controller.php" method="GET">
+
                 <div class="box-body" align="center">
                     <div class="row" align="left">
 
@@ -166,7 +173,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                    <input type="text" class="form-control pull-right" id="datepicker">
+                                    <input name="dataAtend" type="text" class="form-control pull-right" id="datepicker">
                                 </div>
                                 <!-- /.input group -->
                             </div>
@@ -180,7 +187,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <label>Horário do Atendimento:</label>
 
                                     <div class="input-group">
-                                        <input type="text" class="form-control timepicker">
+                                        <input name="horaAtend" type="text" class="form-control timepicker">
 
                                         <div class="input-group-addon">
                                             <i class="fa fa-clock-o"></i>
@@ -195,14 +202,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Medico:</label>
-                                <select class="form-control" style="width: 100%;">
-                                    <option selected="selected">Alabama</option>
-                                    <option>Alaska</option>
-                                    <option>California</option>
-                                    <option>Delaware</option>
-                                    <option>Tennessee</option>
-                                    <option>Texas</option>
-                                    <option>Washington</option>
+                                <select name="medico" class="form-control" style="width: 100%;">
+
+                                    <?php
+                                    while ( $row = mysqli_fetch_assoc( $con->medicos) ) {
+                                        echo '<option value="'.$row['crm'].'">'.$row['nome'].'</option>';
+                                    }
+                                    ?>
+
                                 </select>
                             </div>
                         </div>
@@ -210,14 +217,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Paciente:</label>
-                                <select class="form-control" style="width: 100%;">
-                                    <option selected="selected">Alabama</option>
-                                    <option>Alaska</option>
-                                    <option>California</option>
-                                    <option>Delaware</option>
-                                    <option>Tennessee</option>
-                                    <option>Texas</option>
-                                    <option>Washington</option>
+                                <select name="paciente" class="form-control" style="width: 100%;">
+
+                                    <?php
+                                    while ( $row = mysqli_fetch_assoc( $con->pacientes) ) {
+                                        echo '<option value="'.$row['cpf'].'">'.$row['nome'].'</option>';
+                                    }
+                                    ?>
+
                                 </select>
                             </div>
                         </div>
@@ -225,10 +232,42 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                     <!-- /.row -->
                     <div style="width: 25%;" >
-                        <button type="button" class="btn btn-block btn-primary">Agendar</button>
+
+                        <button type="submit" name="enviar" value="InserirAgenda" class="btn btn-block btn-primary">Cadastrar</button>
+
+                        <div class="modal modal-info fade" id="modal-info">
+                            <div class="modal-dialog" style="margin-top: 15%">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h2 class="modal-title">Agendamento efetuado com sucesso.</h2>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
+
+                        <div class="modal modal-danger fade" id="modal-danger">
+                            <div class="modal-dialog" style="margin-top: 15%">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Erro ao agendar: <?php print($_GET['erro']); ?> </h4>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
                     </div>
                 </div>
                 <!-- /.box-body -->
+              </form>
             </div>
             <!-- /.box -->
 
@@ -351,4 +390,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
     })
 </script>
 </body>
+
+<?php
+if (!empty($_GET['valor'])) {
+    $resultado = $_GET['valor'];
+
+    if ($resultado == 1) {
+        ?>
+
+        <script>
+            $(document).ready(function () {
+                $("#modal-info").modal();
+            });
+        </script>
+    <?php
+
+    }elseif ($resultado == 2){
+    ?>
+
+        <script>
+            $(document).ready(function () {
+                $("#modal-danger").modal();
+            });
+        </script>
+
+        <?php
+    }
+}
+?>
+
 </html>

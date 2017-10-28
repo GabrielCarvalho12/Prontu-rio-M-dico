@@ -150,7 +150,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- SELECT2 EXAMPLE -->
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Select2</h3>
+                    <h3 class="box-title">Agendamento</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body" align="center">

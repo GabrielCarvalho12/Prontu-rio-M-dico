@@ -9,6 +9,10 @@ class Conexao
     private $nomeBanco;
     private $banco;
     private $result;
+    private $resultMed;
+    private $resultPac;
+    private $queryEsp;
+    private $NomeEspec=[];
 
 
     function Construct($servidor = "localhost", $usuario = "root", $senha = "", $nomeBanco="prontuario")
@@ -84,6 +88,33 @@ class Conexao
 
     }
 
+    public function SelectConsultas()
+    {
+        $this->Construct();
+
+        $query = "Select cod_agendamento as id, data, hora, m.nome as medico, p.nome as paciente
+                  From agendamento as a
+                  Inner Join medico as m On a.medico_crm = m.crm
+                  Inner Join paciente as p On a.paciente_cpf = p.cpf ";
+
+        $this->result = mysqli_query($this->getBanco(),$query);
+
+    }
+
+    public function SelectEditAgend($id)
+    {
+        $this->Construct();
+
+        $query = "Select cod_agendamento as id, data, hora, m.nome as medico, p.nome as paciente
+                  From agendamento as a
+                  Inner Join medico as m On a.medico_crm = m.crm
+                  Inner Join paciente as p On a.paciente_cpf = p.cpf 
+                  WHERE cod_agendamento = '$id'";
+
+        $this->result = mysqli_query($this->getBanco(),$query);
+
+    }
+
     public function SelectEstado()
     {
         $this->Construct();
@@ -94,62 +125,191 @@ class Conexao
 
     }
 
-    public  function  Select()
+    public function SelectEpec()
     {
-        $query = "SELECT * FROM contatos";
+        $this->Construct();
 
-        $this->result = mysqli_query($this->getBanco(),$query);
+        $query = "SELECT id, nome FROM especialidades ORDER BY nome";
+
+        $this->queryEsp = mysqli_query($this->getBanco(),$query);
+
     }
 
-    public  function  SelectUpdate($id)
+    public  function especialidades($espec)
     {
-        $query = "SELECT * FROM contatos WHERE id = $id";
+        $this->Construct();
 
-        $this->result = mysqli_query($this->getBanco(),$query);
+        $query = "SELECT nome FROM especialidades WHERE id in ($espec) ORDER BY nome";
+
+        $con = mysqli_query($this->getBanco(),$query);
+
+        while ( $row = mysqli_fetch_assoc( $con ) ) {
+            $this->NomeEspec[] = $row["nome"];
+
+        }
     }
 
-    public function Inserir($nome,$email,$celular)
+    public  function  SelectMedPac()
     {
-        $query = "INSERT INTO contatos (nome, email, celular) 
-                  VALUES ('".$nome."', '".$email."', '".$celular."')";
+        $this->Construct();
 
-        $inserir = mysqli_query($this->getBanco(),$query);
+        $queryPac = "SELECT cpf, nome FROM paciente ORDER BY nome";
+
+        $queryMed = "SELECT crm, nome FROM medico ORDER BY nome";
+
+        $this->resultPac = mysqli_query($this->getBanco(),$queryPac);
+        $this->resultMed = mysqli_query($this->getBanco(),$queryMed);
+    }
+
+
+    public function InserirMedico ($crm, $nome, $endereco, $complemento, $bairro, $cidade, $estado, $cep, $cpf, $rg,
+                             $data_nascimento, $naturalidade, $nacionalidade, $email, $telefone, $celular, $trabalho, $especialidades=[])
+    {
+        $this->Construct();
+
+        $espec =implode($especialidades, ",");
+        $this->especialidades($espec);
+
+        $data_sql= date("Y-m-d", strtotime($data_nascimento));
+
+        $especnome=implode($this->NomeEspec,", ");
+
+            $query = "INSERT INTO medico (crm,nome,endereco,complemento,bairro,cidade,estado,cep,cpf,rg,
+                  data_nascimento,naturalidade,nacionalidade,email,telefone,celular,trabalho,especialidades)
+                  VALUES ('$crm', '$nome', '$endereco', '$complemento', '$bairro',
+                  (SELECT nome FROM cidades WHERE cod_cidades = '$cidade' ORDER BY nome),
+                  (SELECT nome FROM estados where cod_estados = '$estado' ORDER BY sigla), 
+                  '$cep', '$cpf', '$rg','$data_sql', '$naturalidade', '$nacionalidade', 
+                  '$email', '$telefone', '$celular', '$trabalho', '$especnome' )";
+
+            $inserir = mysqli_query($this->getBanco(), $query);
+
+            if ($inserir) {
+
+                header("Location: ../View/Adm/Medico.php?valor=1");
+
+            } else {
+                $var = mysqli_error($this->getBanco());
+
+                header("Location: ../View/Adm/Medico.php?valor=2&erro=".$var);
+            }
+    }
+
+
+    public function InserirPaciente ($cpf, $nome, $endereco, $bairro, $complemento, $cidade, $estado, $cep, $rg,
+                                   $data_nascimento, $naturalidade, $nacionalidade, $email, $telefone, $celular, $tipoSan, $NomePai, $NomeMae)
+    {
+        $this->Construct();
+
+        $data_sql= date("Y-m-d", strtotime($data_nascimento));
+
+        $query = "INSERT INTO paciente (cpf,nome,endereco,bairro,complemento,cidade,estado,cep,rg,
+                  data_nascimento,naturalidade,nacionalidade,email,telefone,celular,tipo_sanguineo,nome_pai,nome_mae)
+                  VALUES ('$cpf', '$nome', '$endereco', '$bairro', '$complemento',
+                  (SELECT nome FROM cidades WHERE cod_cidades = '$cidade' ORDER BY nome),
+                  (SELECT nome FROM estados where cod_estados = '$estado' ORDER BY sigla), 
+                  '$cep', '$rg','$data_sql', '$naturalidade', '$nacionalidade', 
+                  '$email', '$telefone', '$celular', '$tipoSan', '$NomePai', '$NomeMae' )";
+
+        $inserir = mysqli_query($this->getBanco(), $query);
+
+
         if ($inserir) {
 
-        } else {
-            echo "Não foi possível inserir o contato, tente novamente.";
-            echo "Dados sobre o erro:" . mysqli_error($this->getBanco());
-        }
+            header("Location: ../View/Adm/Paciente.php?valor=1");
 
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Adm/Paciente.php?valor=2&erro=".$var);
+        }
     }
 
-    public function Uptade($id,$nome,$email,$celular)
+
+    public function InserirAtend ($id, $queixa, $historico, $proRen, $proArt, $proCard, $proGast, $proResp, $alergias, $hepatite,
+                                  $gravidez, $diabetes, $medicamentos)
     {
-        $query = "UPDATE contatos 
-                  SET nome = '".$nome."', email = '".$email."', celular = '".$celular."' 
-                  WHERE id = '".$id."' ";
+        $this->Construct();
+
+        $query = "INSERT INTO atendimento (agendamento_cod_agendamento ,queixa_principal, 
+                  historico,problemas_renais,problemas_articulares,
+                  problemas_cardiacos,problemas_respiratorios,problemas_gastricos,
+                  alergias,hepatite,gravidez,diabetes,utilliza_medicamentos)
+                  VALUES ('$id', '$queixa', '$historico', '$proRen', 
+                  '$proArt', '$proCard', '$proResp', '$proGast', 
+                  '$alergias', '$hepatite', '$gravidez', '$diabetes','$medicamentos' )";
+
+        $inserir = mysqli_query($this->getBanco(), $query);
+
+        if ($inserir) {
+
+            header("Location: ../View/Medico/MedAtend.php?valor=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Medico/MedAtend.php?valor=2&erro=".$var);
+        }
+    }
+
+    public function InserirAgenda ($data, $hora, $medico, $paciente)
+    {
+        $this->Construct();
+
+        $query = "INSERT INTO agendamento (data, hora, medico_crm, paciente_cpf)
+                  VALUES ('$data', '$hora', '$medico', '$paciente')";
+
+        $inserir = mysqli_query($this->getBanco(), $query);
+
+        if ($inserir) {
+
+            header("Location: ../View/Adm/Agendamento.php?valor=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Adm/Agendamento.php?valor=2&erro=".$var);
+        }
+    }
+
+
+    public function EditAgenda($id, $data, $hora, $medico, $paciente)
+    {
+        $this->Construct();
+
+        $query = "UPDATE agendamento 
+                  SET data = '$data', hora = '$hora', medico_crm = '$medico', paciente_cpf = '$paciente' 
+                  WHERE cod_agendamento = '$id' ";
 
         $atualizar = mysqli_query($this->getBanco(),$query);
 
         if ($atualizar) {
 
+            header("Location: ../View/Adm/AdmConsultas.php?valorEdit=1");
+
         } else {
-            echo "Não foi possível atualizar o contato, tente novamente.";
-            echo "Dados sobre o erro:" . mysqli_error($this->getBanco());
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Adm/AdmConsultas.php?valorEdit=2&erro=".$var);
         }
 
     }
 
     function Delete($id)
     {
-        $query = "DELETE FROM contatos WHERE id = '".$id."'";
+        $this->Construct();
+
+        $query = "DELETE FROM agendamento WHERE cod_agendamento = '$id'";
         $deletar=mysqli_query($this->getBanco(),$query);
 
         if ($deletar) {
 
+            header("Location: ../View/Adm/AdmConsultas.php?valorDel=1");
+
         } else {
-            echo "Não foi possível deletar o contato, tente novamente.";
-            echo "Dados sobre o erro:" . mysqli_error($this->getBanco());
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Adm/AdmConsultas.php?valorDel=2&erro=".$var);
         }
     }
 
@@ -169,6 +329,25 @@ class Conexao
         return $this->banco;
     }
 
+    public function getQueryEsp()
+    {
+        return $this->queryEsp;
+    }
+
+    public function getResultEdit()
+    {
+        return $this->resultEdit;
+    }
+
+    public function getResultMed()
+    {
+        return $this->resultMed;
+    }
+
+    public function getResultPac()
+    {
+        return $this->resultPac;
+    }
 
     public function Desconectar()
     {
