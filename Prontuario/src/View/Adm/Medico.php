@@ -108,40 +108,43 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
+    <aside class="main-sidebar">
 
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
 
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-        <div align="center">
-          <img src="../../../public/dist/img/logo.png" alt="User Image" style="width: 50%">
-        </div>
-      </div>
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel">
+                <div align="center">
+                    <img src="../../../public/dist/img/logo.png" alt="User Image" style="width: 50%">
+                </div>
+            </div>
 
-      <!-- Sidebar Menu -->
-      <ul class="sidebar-menu" data-widget="tree">
-        <li class="header"></li>
-        <!-- Optionally, you can add icons to the links -->
-        <li><a href="Agendamento.php"><i class="fa fa-book"></i> <span>Agendamento</span></a></li>
-        <li><a href="AdmConsultas.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Consultas</span></a></li>
-        <li class="active treeview">
-          <a href="#"><i class="fa fa-user-plus"></i> <span>Cadastrar</span>
-            <span class="pull-right-container">
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header"></li>
+                <!-- Optionally, you can add icons to the links -->
+                <li><a href="ExibeMedico.php"><i class="fa fa-fw fa-user-md"></i> <span>Médicos</span></a></li>
+                <li><a href="ExibePaciente.php"><i class="ion ion-person-add"></i> <span>Pacientes</span></a></li>
+                <li><a href="ExibeAtend.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimentos</span></a></li>
+                <li><a href="ExibeAgend.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
+                <li class=" active treeview">
+                    <a href="#"><i class="fa fa-user-plus"></i> <span>Inserir</span>
+                        <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="active"><a href="Medico.php"> <i class="fa fa-fw fa-user-md"></i> Médico</a></li>
-            <li><a href="Paciente.php"> <i class="ion ion-person-add"></i> Paciente</a></li>
-          </ul>
-        </li>
-      </ul>
-      <!-- /.sidebar-menu -->
-    </section>
-    <!-- /.sidebar -->
-  </aside>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="active"><a href="Medico.php"> <i class="fa fa-fw fa-user-md"></i> Médico</a></li>
+                        <li><a href="Paciente.php"> <i class="ion ion-person-add"></i> Paciente</a></li>
+                        <li><a href="Agendamento.php"> <i class="fa fa-book"></i> Agendamento</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -156,7 +159,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- SELECT2 EXAMPLE -->
       <div class="box box-default" >
         <div class="box-header with-border">
-          <h3 class="box-title">Cadastro Médico</h3>
+          <h3 class="box-title">Inserir Médico</h3>
         </div>
 
      <form action="../../Controller/controller.php" method="GET">
@@ -169,9 +172,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <label for="CRM">CRM:</label>
                 <input class="form-control" name="crm" placeholder="CRM">
               </div>
-
             </div>
             <!-- /.col -->
+
             <div class="col-md-3">
               <div class="form-group">
                 <label for="Nome">Nome:</label>
@@ -210,8 +213,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <select class="form-control" name="estado" id="estados" style="width: 100%">
 
                       <?php
-                      while ( $row = mysqli_fetch_assoc( $con->query) ) {
-                          echo '<option value="'.$row['cod_estados'].'">'.$row['sigla'].'</option>';
+                      while ( $row = mysqli_fetch_assoc( $con->queryEstd) ) {
+                          ?>
+                          <option value="<?php echo $row['cod_estados']?>"> <?php echo $row['sigla']?> </option>';
+
+                          <?php
                       }
                       ?>
 

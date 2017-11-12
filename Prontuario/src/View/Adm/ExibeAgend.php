@@ -114,10 +114,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header"></li>
                 <!-- Optionally, you can add icons to the links -->
-                <li><a href="Agendamento.php"><i class="fa fa-book"></i> <span>Agendamento</span></a></li>
-                <li class="active"><a href="AdmConsultas.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Consultas</span></a></li>
+                <li><a href="ExibeMedico.php"><i class="fa fa-fw fa-user-md"></i> <span>Médicos</span></a></li>
+                <li><a href="ExibePaciente.php"><i class="ion ion-person-add"></i> <span>Pacientes</span></a></li>
+                <li><a href="ExibeAtend.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimentos</span></a></li>
+                <li class="active"><a href="ExibeAgend.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-user-plus"></i> <span>Cadastrar</span>
+                    <a><i class="fa fa-user-plus"></i> <span>Inserir</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -125,11 +127,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="treeview-menu">
                         <li><a href="Medico.php"> <i class="fa fa-fw fa-user-md"></i> Médico</a></li>
                         <li><a href="Paciente.php"> <i class="ion ion-person-add"></i> Paciente</a></li>
+                        <li><a href="Agendamento.php"> <i class="fa fa-book"></i> Agendamento</a></li>
                     </ul>
                 </li>
             </ul>
             <!-- /.sidebar-menu -->
-
         </section>
         <!-- /.sidebar -->
     </aside>
@@ -151,10 +153,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">Consultas</h3>
+                            <h3 class="box-title">Agendamentos</h3>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body" align="center">
+                        <div class="box-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
@@ -256,7 +258,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span></button>
-                                            <h3 class="modal-title">Agendamento deletado com sucesso.</h3>
+                                            <h3 class="modal-title" align="center">Agendamento deletado com sucesso.</h3>
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->

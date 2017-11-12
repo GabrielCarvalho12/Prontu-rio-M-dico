@@ -103,40 +103,43 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
+    <aside class="main-sidebar">
 
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
 
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-        <div align="center">
-          <img src="../../../public/dist/img/logo.png" alt="User Image" style="width: 50%">
-        </div>
-      </div>
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel">
+                <div align="center">
+                    <img src="../../../public/dist/img/logo.png" alt="User Image" style="width: 50%">
+                </div>
+            </div>
 
-      <!-- Sidebar Menu -->
-      <ul class="sidebar-menu" data-widget="tree">
-        <li class="header"></li>
-        <!-- Optionally, you can add icons to the links -->
-        <li><a href="Agendamento.php"><i class="fa fa-book"></i> <span>Agendamento</span></a></li>
-        <li class="active"><a href="AdmConsultas.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Consultas</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-user-plus"></i> <span>Cadastrar</span>
-            <span class="pull-right-container">
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header"></li>
+                <!-- Optionally, you can add icons to the links -->
+                <li><a href="ExibeMedico.php"><i class="fa fa-fw fa-user-md"></i> <span>Médicos</span></a></li>
+                <li><a href="ExibePaciente.php"><i class="ion ion-person-add"></i> <span>Pacientes</span></a></li>
+                <li><a href="ExibeAtend.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimentos</span></a></li>
+                <li><a href="ExibeAgend.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
+                <li class="treeview">
+                    <a href="#"><i class="fa fa-user-plus"></i> <span>Inserir</span>
+                        <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="Medico.php"> <i class="fa fa-fw fa-user-md"></i> Médico</a></li>
-            <li><a href="Paciente.php"> <i class="ion ion-person-add"></i> Paciente</a></li>
-          </ul>
-        </li>
-      </ul>
-      <!-- /.sidebar-menu -->
-    </section>
-    <!-- /.sidebar -->
-  </aside>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="Medico.php"> <i class="fa fa-fw fa-user-md"></i> Médico</a></li>
+                        <li><a href="Paciente.php"> <i class="ion ion-person-add"></i> Paciente</a></li>
+                        <li><a href="Agendamento.php"> <i class="fa fa-book"></i> Agendamento</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -151,7 +154,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- SELECT2 EXAMPLE -->
       <div class="box box-default">
         <div class="box-header with-border">
-          <h3 class="box-title">Atendimento</h3>
+          <h3 class="box-title"> Inserir Atendimento</h3>
         </div>
 
        <form action="../../Controller/controller.php" method="GET">
@@ -178,7 +181,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-md-5">
               <div class="form-group">
                 <label for="NomeMae">Problemas Renais:</label>
-                <input class="form-control" name="proRen" placeholder="NomeMae">
+                <input class="form-control" name="proRen" placeholder="Problemas Renais">
               </div>
             </div>
 
@@ -222,11 +225,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <label>Hepatite :</label>
               <label>
                 Sim
-                <input type="radio" name="hepatite" class="minimal" value="true">
+                <input type="radio" name="hepatite" class="minimal" value="1">
               </label>
               <label>
                 Não
-                <input type="radio" name="hepatite" class="minimal" value="false" checked>
+                <input type="radio" name="hepatite" class="minimal" value="0" checked>
               </label>
             </div>
 
@@ -234,11 +237,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <label>Gravidez :</label>
               <label>
                 Sim
-                <input type="radio" name="gravidez" class="minimal" value="true" >
+                <input type="radio" name="gravidez" class="minimal" value="1" >
               </label>
               <label>
                 Não
-                <input type="radio" name="gravidez" class="minimal" value="false" checked>
+                <input type="radio" name="gravidez" class="minimal" value="0" checked>
               </label>
             </div>
 
@@ -246,11 +249,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <label>Diabetes :</label>
               <label>
                 Sim
-                <input type="radio" name="diabetes" class="minimal" value="true">
+                <input type="radio" name="diabetes" class="minimal" value="1">
               </label>
               <label>
                 Não
-                <input type="radio" name="diabetes" class="minimal" value="false" checked>
+                <input type="radio" name="diabetes" class="minimal" value="0" checked>
               </label>
             </div>
 
@@ -259,11 +262,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <label>Utiliza Medicamentos :</label>
               <label>
                 Sim
-                <input type="radio" name="medicamentos" class="minimal" value="true">
+                <input type="radio" name="medicamentos" class="minimal" value="1">
               </label>
               <label>
                 Não
-                <input type="radio" name="medicamentos" class="minimal" value="false" checked>
+                <input type="radio" name="medicamentos" class="minimal" value="0" checked>
               </label>
             </div>
           </div>

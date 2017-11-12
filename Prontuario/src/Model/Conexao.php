@@ -9,10 +9,14 @@ class Conexao
     private $nomeBanco;
     private $banco;
     private $result;
+    private $cidades;
     private $resultMed;
+    private $resultEditMed;
+    private $resultEditPac;
+    private $resultEditAtend;
     private $resultPac;
     private $queryEsp;
-    private $NomeEspec=[];
+    private $Espec;
 
 
     function Construct($servidor = "localhost", $usuario = "root", $senha = "", $nomeBanco="prontuario")
@@ -101,6 +105,40 @@ class Conexao
 
     }
 
+    public function SelectAtend()
+    {
+        $this->Construct();
+
+        $query = "Select *, agendamento_cod_agendamento as id From atendimento";
+
+        $this->result = mysqli_query($this->getBanco(),$query);
+
+    }
+
+    public function SelectEditMed($crm)
+    {
+        $this->Construct();
+
+        $query = "Select *
+                  From medico 
+                  WHERE crm = $crm ";
+
+        $this->resultEditMed = mysqli_query($this->getBanco(),$query);
+
+    }
+
+    public function SelectEditAtend($id)
+    {
+        $this->Construct();
+
+        $query = "Select *
+                  From atendimento 
+                  WHERE agendamento_cod_agendamento = $id ";
+
+        $this->resultEditAtend = mysqli_query($this->getBanco(),$query);
+
+    }
+
     public function SelectEditAgend($id)
     {
         $this->Construct();
@@ -115,13 +153,41 @@ class Conexao
 
     }
 
+    public function SelectEditPac($cpf)
+    {
+        $this->Construct();
+
+        $query = "Select *
+                  From paciente 
+                  WHERE cpf = '$cpf' ";
+
+        $this->resultEditPac = mysqli_query($this->getBanco(),$query);
+
+    }
+
     public function SelectEstado()
     {
         $this->Construct();
 
-        $query = "SELECT cod_estados, sigla FROM estados ORDER BY sigla";
+        $query = "SELECT * FROM estados ORDER BY sigla";
 
         $this->result = mysqli_query($this->getBanco(),$query);
+
+    }
+
+    public function SelectCidade($id)
+    {
+        $this->Construct();
+
+        $sql = "SELECT * FROM cidades WHERE estados_cod_estados = '$id' ORDER BY nome";
+
+        $res = mysqli_query($this->getBanco(), $sql );
+
+        while ( $row = mysqli_fetch_assoc( $res ) ) {
+            $nome = $row["nome"];
+            $cid = $row["cod_cidades"];
+            echo '<option value="'.$cid.'" class="cidades">'.utf8_encode($nome).'</option>';
+        }
 
     }
 
@@ -135,16 +201,16 @@ class Conexao
 
     }
 
-    public  function especialidades($espec)
+    public  function especialidades($crm)
     {
         $this->Construct();
 
-        $query = "SELECT nome FROM especialidades WHERE id in ($espec) ORDER BY nome";
+        $query = "SELECT especialidades FROM medico WHERE crm = $crm";
 
         $con = mysqli_query($this->getBanco(),$query);
 
         while ( $row = mysqli_fetch_assoc( $con ) ) {
-            $this->NomeEspec[] = $row["nome"];
+            $this->Espec = $row["especialidades"];
 
         }
     }
@@ -153,9 +219,9 @@ class Conexao
     {
         $this->Construct();
 
-        $queryPac = "SELECT cpf, nome FROM paciente ORDER BY nome";
+        $queryPac = "SELECT cpf, nome, rg FROM paciente ORDER BY nome";
 
-        $queryMed = "SELECT crm, nome FROM medico ORDER BY nome";
+        $queryMed = "SELECT crm, nome, cpf FROM medico ORDER BY nome";
 
         $this->resultPac = mysqli_query($this->getBanco(),$queryPac);
         $this->resultMed = mysqli_query($this->getBanco(),$queryMed);
@@ -195,6 +261,62 @@ class Conexao
             }
     }
 
+    public function EditMedico ($crm,$nome, $endereco, $complemento, $bairro, $cidade, $estado, $cep, $cpf, $rg,
+                                $data_nascimento, $naturalidade, $nacionalidade, $email, $telefone, $celular, $trabalho, $especialidades=[])
+    {
+        $this->Construct();
+
+        $this->especialidades($crm);
+        $especBD = explode(',', $this->Espec);
+
+        $dif = array_diff( $especialidades,$especBD );
+        $concat = array_merge($especBD, $dif);
+        $result = implode($concat, ",");
+
+        $data_sql= date("Y-m-d", strtotime($data_nascimento));
+
+
+        $query = "UPDATE medico 
+                  SET nome = '$nome',endereco = '$endereco', complemento = '$complemento', bairro = '$bairro', 
+                  cidade = (SELECT nome FROM cidades WHERE cod_cidades = '$cidade' ORDER BY nome), 
+                  estado = (SELECT nome FROM estados where cod_estados = '$estado' ORDER BY sigla), 
+                  cep = '$cep', cpf = '$cpf', rg = '$rg',
+                  data_nascimento = '$data_sql', naturalidade = '$naturalidade', nacionalidade = '$nacionalidade', email = '$email', 
+                  telefone = '$telefone',celular = '$celular', trabalho = '$trabalho', especialidades = '$result'  
+                  WHERE crm = '$crm' ";
+
+        $atualizar = mysqli_query($this->getBanco(),$query);
+
+        if ($atualizar) {
+
+            header("Location: ../View/Adm/ExibeMedico.php?valorEdit=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Adm/ExibeMedico.php?valorEdit=2&erro=".$var);
+        }
+
+    }
+
+    function DelMedico($crm)
+    {
+        $this->Construct();
+
+        $query = "DELETE FROM medico WHERE crm = '$crm'";
+        $deletar=mysqli_query($this->getBanco(),$query);
+
+        if ($deletar) {
+
+            header("Location: ../View/Adm/ExibeMedico.php?valorDel=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Adm/ExibeMedico.php?valorDel=2&erro=".$var);
+        }
+    }
+
 
     public function InserirPaciente ($cpf, $nome, $endereco, $bairro, $complemento, $cidade, $estado, $cep, $rg,
                                    $data_nascimento, $naturalidade, $nacionalidade, $email, $telefone, $celular, $tipoSan, $NomePai, $NomeMae)
@@ -225,6 +347,53 @@ class Conexao
         }
     }
 
+    public function EditPaciente ($cpf, $nome, $endereco, $bairro, $complemento, $cidade, $estado, $cep, $rg,
+                                  $data_nascimento, $naturalidade, $nacionalidade, $email, $telefone, $celular, $tipoSan, $NomePai, $NomeMae)
+    {
+        $this->Construct();
+
+        $data_sql= date("Y-m-d", strtotime($data_nascimento));
+
+        $query = "UPDATE paciente 
+                  SET nome = '$nome',endereco = '$endereco', complemento = '$complemento', bairro = '$bairro', 
+                  cidade = (SELECT nome FROM cidades WHERE cod_cidades = '$cidade' ORDER BY nome), 
+                  estado = (SELECT nome FROM estados where cod_estados = '$estado' ORDER BY sigla), 
+                  cep = '$cep', cpf = '$cpf', rg = '$rg',
+                  data_nascimento = '$data_sql', naturalidade = '$naturalidade', nacionalidade = '$nacionalidade', email = '$email', telefone = '$telefone',celular = '$celular', 
+                  tipo_sanguineo = '$tipoSan', nome_pai = '$NomePai', nome_mae = '$NomeMae'
+                  WHERE cpf = '$cpf' ";
+
+        $atualizar = mysqli_query($this->getBanco(),$query);
+
+        if ($atualizar) {
+
+            header("Location: ../View/Adm/ExibePaciente.php?valorEdit=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Adm/ExibePaciente.php?valorEdit=2&erro=".$var);
+        }
+
+    }
+
+    function DelPaciente($cpf)
+    {
+        $this->Construct();
+
+        $query = "DELETE FROM paciente WHERE cpf = '$cpf'";
+        $deletar=mysqli_query($this->getBanco(),$query);
+
+        if ($deletar) {
+
+            header("Location: ../View/Adm/ExibePaciente.php?valorDel=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Adm/ExibePaciente.php?valorDel=2&erro=".$var);
+        }
+    }
 
     public function InserirAtend ($id, $queixa, $historico, $proRen, $proArt, $proCard, $proGast, $proResp, $alergias, $hepatite,
                                   $gravidez, $diabetes, $medicamentos)
@@ -234,7 +403,7 @@ class Conexao
         $query = "INSERT INTO atendimento (agendamento_cod_agendamento ,queixa_principal, 
                   historico,problemas_renais,problemas_articulares,
                   problemas_cardiacos,problemas_respiratorios,problemas_gastricos,
-                  alergias,hepatite,gravidez,diabetes,utilliza_medicamentos)
+                  alergias,hepatite,gravidez,diabetes,utiliza_medicamentos)
                   VALUES ('$id', '$queixa', '$historico', '$proRen', 
                   '$proArt', '$proCard', '$proResp', '$proGast', 
                   '$alergias', '$hepatite', '$gravidez', '$diabetes','$medicamentos' )";
@@ -243,12 +412,55 @@ class Conexao
 
         if ($inserir) {
 
-            header("Location: ../View/Medico/MedAtend.php?valor=1");
+            header("Location: ../View/Medico/ExibeAtend.php?valor=1");
 
         } else {
             $var = mysqli_error($this->getBanco());
 
-            header("Location: ../View/Medico/MedAtend.php?valor=2&erro=".$var);
+            header("Location: ../View/Medico/ExibeAtend.php?valor=2&erro=".$var);
+        }
+    }
+
+    public function EditAtend ($id, $queixa, $historico, $proRen, $proArt, $proCard, $proGast, $proResp, $alergias, $hepatite,
+                               $gravidez, $diabetes, $medicamentos)
+    {
+        $this->Construct();
+
+        $query = "UPDATE atendimento 
+                  SET queixa_principal = '$queixa', historico = '$historico', problemas_renais = '$proRen', problemas_articulares = '$proArt',
+                  problemas_cardiacos = '$proCard', problemas_respiratorios = '$proGast', problemas_gastricos = '$proResp',
+                  alergias = '$alergias', hepatite = '$hepatite', gravidez = '$gravidez', diabetes = '$diabetes', utiliza_medicamentos = '$medicamentos'
+                  WHERE agendamento_cod_agendamento = '$id' ";
+
+        $atualizar = mysqli_query($this->getBanco(),$query);
+
+        if ($atualizar) {
+
+            header("Location: ../View/Adm/ExibeAtend.php?valorEdit=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Adm/ExibeAtend.php?valorEdit=2&erro=".$var);
+        }
+
+    }
+
+    function DelAtend($id)
+    {
+        $this->Construct();
+
+        $query = "DELETE FROM atendimento WHERE agendamento_cod_agendamento = '$id'";
+        $deletar=mysqli_query($this->getBanco(),$query);
+
+        if ($deletar) {
+
+            header("Location: ../View/Adm/ExibeAtend.php?valorDel=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Adm/ExibeAtend.php?valorDel=2&erro=".$var);
         }
     }
 
@@ -263,12 +475,12 @@ class Conexao
 
         if ($inserir) {
 
-            header("Location: ../View/Adm/Agendamento.php?valor=1");
+            header("Location: ../View/Adm/ExibeAgend.php?valor=1");
 
         } else {
             $var = mysqli_error($this->getBanco());
 
-            header("Location: ../View/Adm/Agendamento.php?valor=2&erro=".$var);
+            header("Location: ../View/Adm/ExibeAgend.php?valor=2&erro=".$var);
         }
     }
 
@@ -285,17 +497,17 @@ class Conexao
 
         if ($atualizar) {
 
-            header("Location: ../View/Adm/AdmConsultas.php?valorEdit=1");
+            header("Location: ../View/Adm/ExibeAgend.php?valorEdit=1");
 
         } else {
             $var = mysqli_error($this->getBanco());
 
-            header("Location: ../View/Adm/AdmConsultas.php?valorEdit=2&erro=".$var);
+            header("Location: ../View/Adm/ExibeAgend.php?valorEdit=2&erro=".$var);
         }
 
     }
 
-    function Delete($id)
+    function DelAgenda($id)
     {
         $this->Construct();
 
@@ -304,12 +516,12 @@ class Conexao
 
         if ($deletar) {
 
-            header("Location: ../View/Adm/AdmConsultas.php?valorDel=1");
+            header("Location: ../View/Adm/ExibeAgend.php?valorDel=1");
 
         } else {
             $var = mysqli_error($this->getBanco());
 
-            header("Location: ../View/Adm/AdmConsultas.php?valorDel=2&erro=".$var);
+            header("Location: ../View/Adm/ExibeAgend.php?valorDel=2&erro=".$var);
         }
     }
 
@@ -334,14 +546,29 @@ class Conexao
         return $this->queryEsp;
     }
 
-    public function getResultEdit()
+    public function getResultEditAtend()
     {
-        return $this->resultEdit;
+        return $this->resultEditAtend;
+    }
+
+    public function getResultEditMed()
+    {
+        return $this->resultEditMed;
+    }
+
+    public function getResultEditPac()
+    {
+        return $this->resultEditPac;
     }
 
     public function getResultMed()
     {
         return $this->resultMed;
+    }
+
+    public function getCidades()
+    {
+        return $this->cidades;
     }
 
     public function getResultPac()

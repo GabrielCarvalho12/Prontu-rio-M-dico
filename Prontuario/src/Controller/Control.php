@@ -1,19 +1,48 @@
 <?php
 require_once "ProntuarioMedico/../../Model/Conexao.php";
-require_once "ProntuarioMedico/../../Model/connection.php";
 
 class Control
 {
     public $query;
+    public $queryEstd;
+    public $queryCidd;
     public $db;
     public $espec;
     public $medicos;
     public $pacientes;
 
+    public function EditPaciente($cpf)
+    {
+        $con = new Conexao();
+        $con->SelectEditPac($cpf);
+        $this->query = $con->getResultEditPac();
+    }
+
+    public function EditAtend($id)
+    {
+        $con = new Conexao();
+        $con->SelectEditAtend($id);
+        $this->query = $con->getResultEditAtend();
+    }
+
     public function EditAgend($id)
     {
         $con = new Conexao();
         $con->SelectEditAgend($id);
+        $this->query = $con->getResult();
+    }
+
+    public function EditMedico($crm)
+    {
+        $con = new Conexao();
+        $con->SelectEditMed($crm);
+        $this->query = $con->getResultEditMed();
+    }
+
+    public function atendimentos()
+    {
+        $con = new Conexao();
+        $con->SelectAtend();
         $this->query = $con->getResult();
     }
 
@@ -28,7 +57,7 @@ class Control
     {
         $con = new Conexao();
         $con->SelectEstado();
-        $this->query = $con->getResult();
+        $this->queryEstd = $con->getResult();
     }
     public function MedPac()
     {
@@ -38,11 +67,11 @@ class Control
         $this->pacientes = $con->getResultPac();
     }
 
-    public function cidades()
+    public function cidades($id)
     {
-        $con = new connection();
-        $con->conect();
-        $this->db = $con->getDb();
+        $con = new Conexao();
+        $con->SelectCidade($id);
+        $this->queryCidd = $con->getCidades();
     }
 
     public function especialidades()

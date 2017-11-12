@@ -8,24 +8,31 @@ $route = $urlAmigavel->routes(
 
             [
                 //Rota
+                'prefix' => '/',
+                //nomeDoArquivo
+                'archive'    => 'inicio.php'
+            ],
+
+            [
+                //Rota
                 'prefix' => '/login',
                 //nomeDoArquivo
-                'archive'    => 'Login.php'
+                'archive'    => '/logins/Login.php'
             ],
 
             [
                 //Rota
                 'prefix' => '/loginMedico',
                 //nomeDoArquivo
-                'archive'    => 'loginMedico.php'
+                'archive'    => '/logins/loginMedico.php'
             ],
 
             [
                 //Rota
                 'prefix' => '/loginAtend',
                 //nomeDoArquivo
-                'archive'    => 'loginAtend.php'
-            ]
+                'archive'    => '/logins/loginAtend.php'
+            ],
 
 		]
 		//And Array Rotas

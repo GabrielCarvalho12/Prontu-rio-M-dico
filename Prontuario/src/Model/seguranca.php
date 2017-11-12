@@ -119,6 +119,7 @@ function validaAtendimento($usuario, $senha) {
         $_SESSION['usuarioNome'] = $resultado['nome']; // Pega o valor da coluna 'nome' do registro encontrado no MySQL
         // Verifica a opção se sempre validar o login
         if ($_SG['validaSempre'] == true) {
+            session_start();
             // Definimos dois valores na sessão com os dados do login
             $_SESSION['usuarioLogin'] = $usuario;
             $_SESSION['usuarioSenha'] = $senha;
@@ -148,6 +149,7 @@ function protegePagina() {
 }
 
 function protegePagMed() {
+
     global $_SG;
     if (!isset($_SESSION['usuarioID']) OR !isset($_SESSION['usuarioNome'])) {
         // Não há usuário logado, manda pra página de login
@@ -165,6 +167,7 @@ function protegePagMed() {
 }
 
 function protegePagAtend() {
+
     global $_SG;
     if (!isset($_SESSION['usuarioID']) OR !isset($_SESSION['usuarioNome'])) {
         // Não há usuário logado, manda pra página de login
@@ -184,16 +187,18 @@ function protegePagAtend() {
  * Função para expulsar um visitante
  */
 function expulsaVisitante() {
+
     global $_SG;
-    // Remove as variáveis da sessão (caso elas existam)
+    // Remove as var    iáveis da sessão (caso elas existam)
     unset($_SESSION['usuarioID'], $_SESSION['usuarioNome'], $_SESSION['usuarioLogin'], $_SESSION['usuarioSenha']);
     // Manda pra tela de login
+
     header("Location: ../../login ");
 }
 
 function expulsaVisitanteMed() {
     global $_SG;
-    // Remove as variáveis da sessão (caso elas existam)
+    // Remove as var    iáveis da sessão (caso elas existam)
     unset($_SESSION['usuarioID'], $_SESSION['usuarioNome'], $_SESSION['usuarioLogin'], $_SESSION['usuarioSenha']);
     // Manda pra tela de login
     header("Location: ../../loginMedico ");

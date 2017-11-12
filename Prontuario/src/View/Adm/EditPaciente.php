@@ -1,8 +1,11 @@
-<?php include "../../Controller/Control.php";
+<?php require "../../Controller/Control.php";
 $con = new  Control();
-$con->MedPac();
-?>
+$con->estados();
+$con->EditPaciente($_GET['cpf']);
 
+$linha= mysqli_fetch_object($con->query);
+
+?>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -63,8 +66,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"> <i class="fa fa-plus-square"></i><b> PM</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"> <i class="fa fa-plus-square"></i> <b>PRO</b>MED</span>
-        </a>
+            <span class="logo-lg"> <i class="fa fa-plus-square"></i> <b>PRO</b>MED</span>    </a>
 
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -87,7 +89,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <!-- The user image in the menu -->
                             <li class="user-header">
                                 <img src="../../../public/dist/img/Exit_delete_close_remove_door_logout_out.png" alt="User Image">
-
                                 <p>
                                     Deseja realmente sair do sistema ?
                                 </p>
@@ -126,11 +127,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <li class="header"></li>
                 <!-- Optionally, you can add icons to the links -->
                 <li><a href="ExibeMedico.php"><i class="fa fa-fw fa-user-md"></i> <span>Médicos</span></a></li>
-                <li><a href="ExibePaciente.php"><i class="ion ion-person-add"></i> <span>Pacientes</span></a></li>
+                <li class="active"><a href="ExibePaciente.php"><i class="ion ion-person-add"></i> <span>Pacientes</span></a></li>
                 <li><a href="ExibeAtend.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimentos</span></a></li>
                 <li><a href="ExibeAgend.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
-                <li class=" active treeview">
-                    <a href="#"><i class="fa fa-user-plus"></i> <span>Inserir</span>
+                <li class="treeview">
+                    <a><i class="fa fa-user-plus"></i> <span>Inserir</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -138,7 +139,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="treeview-menu">
                         <li><a href="Medico.php"> <i class="fa fa-fw fa-user-md"></i> Médico</a></li>
                         <li><a href="Paciente.php"> <i class="ion ion-person-add"></i> Paciente</a></li>
-                        <li class="active"><a href="Agendamento.php"> <i class="fa fa-book"></i> Agendamento</a></li>
+                        <li><a href="Agendamento.php"> <i class="fa fa-book"></i> Agendamento</a></li>
                     </ul>
                 </li>
             </ul>
@@ -155,122 +156,230 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <section class="content container-fluid">
 
             <!--------------------------
-              | Your Page Content Here |
-              -------------------------->
+        | Your Page Content Here |
+        -------------------------->
             <!-- SELECT2 EXAMPLE -->
-            <div class="box box-default">
+            <div class="box box-default" >
                 <div class="box-header with-border">
-                    <h3 class="box-title">Inserir Agendamento</h3>
+                    <h3 class="box-title">Editar Paciente</h3>
                 </div>
 
-              <form action="../../Controller/controller.php" method="GET">
+                <form action="../../Controller/controller.php" method="GET">
 
-                <div class="box-body" align="center">
-                    <div class="row" align="left">
+                    <!-- /.box-header -->
+                    <div class="box-body" align="center">
+                        <div class="row" align="left">
 
-                        <!-- Date -->
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Data do Atendimento:</label>
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    <input name="dataAtend" type="text" class="form-control pull-right" id="datepicker">
-                                </div>
-                                <!-- /.input group -->
-                            </div>
-                        </div>
-                        <!-- /.form group -->
-
-                        <!-- time Picker -->
-                        <div class="col-md-3">
-                            <div class="bootstrap-timepicker">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Horário do Atendimento:</label>
-
+                                    <label>CPF:</label>
                                     <div class="input-group">
-                                        <input name="horaAtend" type="text" class="form-control timepicker">
+                                        <input readonly="true" value="<?php echo $linha->cpf; ?>" name="cpf" type="text" class="form-control" data-inputmask='"mask":"999.999.999-99"' data-mask>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <!-- /.col -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Nome">Nome:</label>
+                                    <input value="<?php echo $linha->nome; ?>" name="nome" class="form-control" placeholder="Nome">
+                                </div>
+
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Endereço">Endereço:</label>
+                                    <input value="<?php echo $linha->endereco; ?>" class="form-control" name="endereco" placeholder="Endereço">
+                                </div>
+
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Bairro">Bairro:</label>
+                                    <input value="<?php echo $linha->bairro; ?>" class="form-control" name="bairro" placeholder="Bairro">
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-3">
+
+                                <div class="form-group">
+                                    <label for="Complemento">Complemento:</label>
+                                    <input value="<?php echo $linha->complemento; ?>" class="form-control" name="complemento" placeholder="Complemento">
+                                </div>
+
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="estados">Estado:</label>
+                                    <select class="form-control" name="estado" id="estados" style="width: 100%">
+
+                                        <?php
+                                        while ( $row = mysqli_fetch_assoc( $con->queryEstd) ) {
+                                            ?>
+                                            <option <?php if ($linha->estado== $row['nome']) echo 'selected' ; ?> value="<?php echo $row['cod_estados']?>"> <?php echo $row['sigla']?> </option>';
+
+                                            <?php
+                                        }
+                                        ?>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="cidades">Cidade:</label>
+                                    <select class="form-control" name="cidade" id="cidades" style="width: 100%;">
+                                        <option  value="<?php echo $linha->cidade ?>"><?php echo utf8_encode($linha->cidade) ?> </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>CEP:</label>
+                                    <div class="input-group">
+                                        <input value="<?php echo $linha->cep; ?>" name="cep" type="text" class="form-control" data-inputmask='"mask":"99.999-999"' data-mask>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>RG:</label>
+                                    <div class="input-group">
+                                        <input value="<?php echo $linha->rg; ?>" name="rg" type="text" class="form-control" data-inputmask='"mask":"999999999999-9"' data-mask>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Date -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Data da Nascimento:</label>
+                                    <div class="input-group date">
                                         <div class="input-group-addon">
-                                            <i class="fa fa-clock-o"></i>
+                                            <i class="fa fa-calendar"></i>
                                         </div>
+                                        <input value="<?php echo $linha->data_nascimento; ?>" name="data_nascimento" type="text" class="form-control pull-right" id="datepicker">
                                     </div>
                                     <!-- /.input group -->
                                 </div>
-                                <!-- /.form group -->
                             </div>
-                        </div>
+                            <!-- /.form group -->
 
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Medico:</label>
-                                <select name="medico" class="form-control" style="width: 100%;">
-
-                                    <?php
-                                    while ( $row = mysqli_fetch_assoc( $con->medicos) ) {
-                                        echo '<option value="'.$row['crm'].'">'.$row['nome'].'</option>';
-                                    }
-                                    ?>
-
-                                </select>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Naturalidade">Naturalidade:</label>
+                                    <input value="<?php echo $linha->naturalidade; ?>" name="naturalidade" class="form-control" id="Naturalidade" placeholder="Naturalidade">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Paciente:</label>
-                                <select name="paciente" class="form-control" style="width: 100%;">
-
-                                    <?php
-                                    while ( $row = mysqli_fetch_assoc( $con->pacientes) ) {
-                                        echo '<option value="'.$row['cpf'].'">'.$row['nome'].'</option>';
-                                    }
-                                    ?>
-
-                                </select>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Nacionalidade">Nacionalidade:</label>
+                                    <input value="<?php echo $linha->nacionalidade; ?>" name="nacionalidade" class="form-control" id="Nacionalidade" placeholder="Nacionalidade">
+                                </div>
                             </div>
-                        </div>
 
-                    </div>
-                    <!-- /.row -->
-                    <div style="width: 25%;" >
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Email">Email:</label>
+                                    <input value="<?php echo $linha->email; ?>" name="email" class="form-control" id="Email" placeholder="Email">
+                                </div>
+                            </div>
 
-                        <button type="submit" name="enviar" value="InserirAgenda" class="btn btn-block btn-primary">Cadastrar</button>
-
-                        <div class="modal modal-info fade" id="modal-info">
-                            <div class="modal-dialog" style="margin-top: 15%">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span></button>
-                                        <h2 class="modal-title">Agendamento efetuado com sucesso.</h2>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Telefone:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-phone"></i>
+                                        </div>
+                                        <input value="<?php echo $linha->telefone; ?>" name="telefone" type="text" class="form-control" data-inputmask='"mask":"(99)9999-9999"' data-mask>
                                     </div>
                                 </div>
-                                <!-- /.modal-content -->
                             </div>
-                            <!-- /.modal-dialog -->
-                        </div>
-                        <!-- /.modal -->
 
-                        <div class="modal modal-danger fade" id="modal-danger">
-                            <div class="modal-dialog" style="margin-top: 15%">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">Erro ao agendar: <?php print($_GET['erro']); ?> </h4>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Celular:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-phone"></i>
+                                        </div>
+                                        <input value="<?php echo $linha->celular; ?>" name="celular" type="text" class="form-control" data-inputmask='"mask":"(99)99999-9999"' data-mask>
                                     </div>
                                 </div>
-                                <!-- /.modal-content -->
                             </div>
-                            <!-- /.modal-dialog -->
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="TipoS">Tipo Sanguíneo:</label>
+                                    <input value="<?php echo $linha->tipo_sanguineo; ?>" name="tipoSan" class="form-control" placeholder="TipoS">
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="NomePai">Nome do Pai:</label>
+                                    <input value="<?php echo $linha->nome_pai; ?>" name="pai" class="form-control" placeholder="NomePai">
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="NomeMae">Nome da Mãe:</label>
+                                    <input value="<?php echo $linha->nome_mae; ?>" name="mae" class="form-control" id="NomeMae" placeholder="NomeMae">
+                                </div>
+                            </div>
+
                         </div>
-                        <!-- /.modal -->
+                        <!-- /.row -->
+                        <div style="width: 25%;" >
+
+                            <button type="submit" name="enviar" value="EditarPaciente" class="btn btn-block btn-primary">Cadastrar</button>
+
+                            <div class="modal modal-info fade" id="modal-info">
+                                <div class="modal-dialog" style="margin-top: 15%">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h2 class="modal-title">Paciente editado com sucesso.</h2>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+
+                            <div class="modal modal-danger fade" id="modal-danger">
+                                <div class="modal-dialog" style="margin-top: 15%">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">Erro ao cadastar: <?php print($_GET['erro']); ?> </h4>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+
+                        </div>
                     </div>
-                </div>
-                <!-- /.box-body -->
-              </form>
+                    <!-- /.box-body -->
+
+                </form>
+
             </div>
             <!-- /.box -->
 
@@ -294,6 +403,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </div>
 <!-- ./wrapper -->
 
+<script type="text/javascript" src="../../../public/dist/js/CidEstd/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../../public/dist/js/CidEstd/funcao.js"></script>
 <!-- jQuery 3 -->
 <script src="../../../public/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->

@@ -149,7 +149,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-5 col-xs-6" style="margin-left: 2%">
+                <div class="col-lg-5 col-xs-6" >
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
                         <div class="inner">
@@ -179,23 +179,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-5 col-xs-6" style="margin-top: 2%; margin-left: 2%">
-                    <!-- small box -->
-                    <div class="small-box bg-light-blue">
-                        <div class="inner">
-                            <h3>Atendimento</h3>
-
-                            <p>Adicionar Novo Atendimento</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fa fa-fw fa-stethoscope"></i>
-                        </div>
-                        <a href="Atendimento.php" class="small-box-footer">Atender <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-
-                <div class="col-lg-5 col-xs-8" style="margin-top: 2%; margin-left: 24%" >
+                <div class="col-lg-5 col-xs-6" style="margin-top: 2%" >
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
                         <div class="inner">
@@ -205,7 +189,52 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="icon">
                             <i class="fa fa-search"></i>
                         </div>
-                        <a href="AdmConsultas.php" class="small-box-footer"> Listar <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="ExibeAgend.php" class="small-box-footer"> Listar <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+
+                <div class="col-lg-5 col-xs-6" style="margin-top: 2%" >
+                    <!-- small box -->
+                    <div class="small-box bg-light-blue">
+                        <div class="inner">
+                            <h3>Exibir</h3>
+                            <p>Listar todos os Médicos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-search"></i>
+                        </div>
+                        <a href="ExibeMedico.php" class="small-box-footer"> Exibir <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+
+                <div class="col-lg-5 col-xs-6" style="margin-top: 2%" >
+                    <!-- small box -->
+                    <div class="small-box bg-light-blue">
+                        <div class="inner">
+                            <h3>Exibir</h3>
+                            <p>Listar todos os Pacientes</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-search"></i>
+                        </div>
+                        <a href="ExibePaciente.php" class="small-box-footer"> Exibir <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+
+                <div class="col-lg-5 col-xs-6" style="margin-top: 2%" >
+                    <!-- small box -->
+                    <div class="small-box bg-light-blue">
+                        <div class="inner">
+                            <h3>Exibir</h3>
+                            <p>Listar todos os Atendimentos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-search"></i>
+                        </div>
+                        <a href="ExibeAtend.php" class="small-box-footer"> Exibir <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
