@@ -1,8 +1,10 @@
-<?php include "../../Controller/Control.php";
-$con = new  Control();
-$con->EditAtend($_GET['id']);
+<?php
 
-$linha= mysqli_fetch_object($con->query);
+include "../../Controller/Control.php";
+$con = new  Control();
+$con->MedPac();
+$con->EditAgend($_GET['id']);
+$linha = mysqli_fetch_object($con->query);
 
 ?>
 
@@ -62,11 +64,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="Home.php" class="logo">
+        <a href="HomeAtend.php" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"> <i class="fa fa-plus-square"></i><b> PM</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"> <i class="fa fa-plus-square"></i> <b>PRO</b>MED</span>    </a>
+            <span class="logo-lg"> <i class="fa fa-plus-square"></i> <b>PRO</b>MED</span>
+        </a>
 
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -97,7 +100,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="/ProntuarioMedico/login" class="btn btn-default btn-flat">SIM</a>
+                                    <a href="/ProntuarioMedico/loginAtend" class="btn btn-default btn-flat">SIM</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="" class="btn btn-default btn-flat">NÃO</a>
@@ -127,20 +130,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header"></li>
                 <!-- Optionally, you can add icons to the links -->
-                <li><a href="ExibeMedico.php"><i class="fa fa-fw fa-user-md"></i> <span>Médicos</span></a></li>
-                <li><a href="ExibePaciente.php"><i class="ion ion-person-add"></i> <span>Pacientes</span></a></li>
-                <li class="active"><a href="ExibeAtend.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimentos</span></a></li>
-                <li><a href="ExibeAgend.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
-                <li class="treeview">
-                    <a href="#"><i class="fa fa-user-plus"></i> <span>Inserir</span>
+                <li><a href="ExibePacAtend.php"><i class="ion ion-person-add"></i> <span>Pacientes</span></a></li>
+                <li><a href="ExibeAgendAtend.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
+                <li class=" active treeview">
+                    <a><i class="fa fa-user-plus"></i> <span>Inserir</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="Medico.php"> <i class="fa fa-fw fa-user-md"></i> Médico</a></li>
-                        <li><a href="Paciente.php"> <i class="ion ion-person-add"></i> Paciente</a></li>
-                        <li><a href="Agendamento.php"> <i class="fa fa-book"></i> Agendamento</a></li>
+                        <li><a href="AtendPaciente.php"> <i class="ion ion-person-add"></i> Paciente</a></li>
+                        <li class="active"><a href="AgendAtend.php"> <i class="fa fa-book"></i> Agendamento</a></li>
                     </ul>
                 </li>
             </ul>
@@ -157,12 +157,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <section class="content container-fluid">
 
             <!--------------------------
-        | Your Page Content Here |
-        -------------------------->
+              | Your Page Content Here |
+              -------------------------->
             <!-- SELECT2 EXAMPLE -->
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3 class="box-title"> Editar Atendimento</h3>
+                    <h3 class="box-title"> Editar Agendamento</h3>
                 </div>
 
                 <form action="../../Controller/controller.php" method="GET">
@@ -170,152 +170,85 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="box-body" align="center">
                         <div class="row" align="left">
 
-                            <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>" />
+                            <input type="hidden" name="id" value="<?php echo $linha->id; ?>" />
 
-                            <div class="col-md-5">
+                            <!-- Date -->
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="Queixa">Queixa Principal:</label>
-                                    <input value="<?php echo $linha->queixa_principal; ?>"  class="form-control" name="queixa" placeholder="Queixa Principal">
-                                </div>
-                            </div>
-
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="Historico">Histórico:</label>
-                                    <input value="<?php echo $linha->historico; ?>"  class="form-control" name="historico" placeholder="Histórico">
-                                </div>
-                            </div>
-
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="NomeMae">Problemas Renais:</label>
-                                    <input value="<?php echo $linha->problemas_renais; ?>"  class="form-control" name="proRen" placeholder="Problemas Renais">
-                                </div>
-                            </div>
-
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="pa">Problemas Articulares:</label>
-                                    <input value="<?php echo $linha->problemas_articulares; ?>"  class="form-control" name="proArt" placeholder="Problemas Articulares">
-                                </div>
-                            </div>
-
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="pc">Problemas Cardiacos:</label>
-                                    <input value="<?php echo $linha->problemas_cardiacos; ?>"  class="form-control" name="proCard" placeholder="Problemas Cardiacos">
-                                </div>
-                            </div>
-
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="pg">Problemas Gastricos:</label>
-                                    <input value="<?php echo $linha->problemas_gastricos; ?>"  class="form-control" name="proGast" placeholder="Problemas Gastricos">
-                                </div>
-                            </div>
-
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="pr">Problemas Respiratórios:</label>
-                                    <input value="<?php echo $linha->problemas_respiratorios; ?>"  class="form-control" name="proResp" placeholder="Problemas Respiratórios">
-                                </div>
-                            </div>
-
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="alergias">Alergias:</label>
-                                    <input value="<?php echo $linha->alergias; ?>"  class="form-control" name="alergias" placeholder="Alergias">
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-1" style="width: 20%">
-                                <label>Hepatite :</label>
-                                <label>
-                                    Sim
-                                    <input type="radio" name="hepatite" class="minimal" value="1" <?php if ($linha->hepatite == 1) echo "checked" ?>>
-                                </label>
-                                <label>
-                                    Não
-                                    <input type="radio" name="hepatite" class="minimal" value="0" <?php if ($linha->hepatite == 0) echo "checked" ?>>
-                                </label>
-                            </div>
-
-                            <div class="col-md-1" style="width: 20%">
-                                <label>Gravidez :</label>
-                                <label>
-                                    Sim
-                                    <input type="radio" name="gravidez" class="minimal" value="1" <?php if ($linha->gravidez == 1) echo "checked" ?> >
-                                </label>
-                                <label>
-                                    Não
-                                    <input type="radio" name="gravidez" class="minimal" value="0" <?php if ($linha->gravidez == 0) echo "checked" ?>>
-                                </label>
-                            </div>
-
-                            <div class="col-md-1" style="width: 20%">
-                                <label>Diabetes :</label>
-                                <label>
-                                    Sim
-                                    <input type="radio" name="diabetes" class="minimal" value="1" <?php if ($linha->diabetes == 1) echo "checked" ?>>
-                                </label>
-                                <label>
-                                    Não
-                                    <input type="radio" name="diabetes" class="minimal" value="0" <?php if ($linha->diabetes == 0) echo "checked" ?>>
-                                </label>
-                            </div>
-
-
-                            <div class="col-md-1" style="width: 25%">
-                                <label>Utiliza Medicamentos :</label>
-                                <label>
-                                    Sim
-                                    <input type="radio" name="medicamentos" class="minimal" value="1" <?php if ($linha->utiliza_medicamentos == 1) echo "checked" ?>>
-                                </label>
-                                <label>
-                                    Não
-                                    <input type="radio" name="medicamentos" class="minimal" value="0" <?php if ($linha->utiliza_medicamentos == 0) echo "checked" ?>>
-                                </label>
-                            </div>
-                        </div>
-
-
-                        <div style="width: 15%; margin-top: 2%">
-
-                            <button type="submit" name="enviar" value="EditarAtend" class="btn btn-block btn-primary">Editar</button>
-
-                            <div class="modal modal-info fade" id="modal-info">
-                                <div class="modal-dialog" style="margin-top: 15%">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span></button>
-                                            <h2 class="modal-title">Atendimento cadastrado com sucesso.</h2>
+                                    <label>Data do Atendimento:</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
                                         </div>
+                                        <input value="<?php echo $linha->data; ?>" name="dataAtend" type="text" class="form-control pull-right" id="datepicker">
                                     </div>
-                                    <!-- /.modal-content -->
+                                    <!-- /.input group -->
                                 </div>
-                                <!-- /.modal-dialog -->
                             </div>
-                            <!-- /.modal -->
+                            <!-- /.form group -->
 
-                            <div class="modal modal-danger fade" id="modal-danger">
-                                <div class="modal-dialog" style="margin-top: 15%">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title">Erro ao cadastar: <?php print($_GET['erro']); ?> </h4>
+                            <!-- time Picker -->
+                            <div class="col-md-3">
+                                <div class="bootstrap-timepicker">
+                                    <div class="form-group">
+                                        <label>Horário do Atendimento:</label>
+
+                                        <div class="input-group">
+                                            <input value="<?php echo $linha->hora; ?>" name="horaAtend" type="text" class="form-control timepicker">
+
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
                                         </div>
+                                        <!-- /.input group -->
                                     </div>
-                                    <!-- /.modal-content -->
+                                    <!-- /.form group -->
                                 </div>
-                                <!-- /.modal-dialog -->
                             </div>
-                            <!-- /.modal -->
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Medico:</label>
+                                    <select name="medico" class="form-control" style="width: 100%;">
+
+                                        <?php
+                                        while ( $row = mysqli_fetch_assoc( $con->medicos) ) {
+                                            ?>
+                                            <option <?php if ($linha->medico== $row['nome']) echo 'selected' ; ?> value="<?php echo $row['crm']?>"> <?php echo $row['nome']?> </option>';
+
+                                            <?php
+                                        }
+                                        ?>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Paciente:</label>
+                                    <select name="paciente" class="form-control" style="width: 100%;">
+
+                                        <?php
+                                        while ( $row = mysqli_fetch_assoc( $con->pacientes) ) {
+                                            ?>
+                                            <option <?php if ($linha->paciente== $row['nome']) echo 'selected' ; ?> value="<?php echo $row['cpf']?>"> <?php echo $row['nome']?> </option>';
+
+                                            <?php
+                                        }
+                                        ?>
+
+                                    </select>
+                                </div>
+                            </div>
 
                         </div>
+                        <!-- /.row -->
+                        <div style="width: 15%; margin-top: 2%" >
 
+                            <button type="submit" name="enviar" value="EditarAgendaAtend" class="btn btn-block btn-primary">Editar</button>
+
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </form>
@@ -381,14 +314,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
         //Datemask dd/mm/yyyy
         $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
         //Datemask2 mm/dd/yyyy
-        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+        $('#datemask2').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
         //Money Euro
         $('[data-mask]').inputmask()
 
         //Date range picker
         $('#reservation').daterangepicker()
         //Date range picker with time picker
-        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'DD/MM/YYYY h:mm A' })
         //Date range as a button
         $('#daterange-btn').daterangepicker(
             {
@@ -404,7 +337,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 endDate  : moment()
             },
             function (start, end) {
-                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                $('#daterange-btn span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'))
             }
         )
 
@@ -441,33 +374,4 @@ scratch. This page gets rid of all links and provides the needed markup only.
     })
 </script>
 </body>
-
-<?php
-if (!empty($_GET['valor'])) {
-    $resultado = $_GET['valor'];
-
-    if ($resultado == 1) {
-        ?>
-
-        <script>
-            $(document).ready(function () {
-                $("#modal-info").modal();
-            });
-        </script>
-    <?php
-
-    }elseif ($resultado == 2){
-    ?>
-
-        <script>
-            $(document).ready(function () {
-                $("#modal-danger").modal();
-            });
-        </script>
-
-        <?php
-    }
-}
-?>
-
 </html>

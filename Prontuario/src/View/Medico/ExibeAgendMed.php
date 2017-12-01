@@ -1,6 +1,6 @@
 <?php include "../../Controller/Control.php";
 $con = new  Control();
-$con->MedPac();
+$con->consultas();
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +49,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="Home.php" class="logo">
+        <a href="HomeMedico.php" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"> <i class="fa fa-plus-square"></i><b> PM</b></span>
             <!-- logo for regular state and mobile devices -->
@@ -84,7 +84,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="/ProntuarioMedico/login" class="btn btn-default btn-flat">SIM</a>
+                                    <a href="/ProntuarioMedico/loginMedico" class="btn btn-default btn-flat">SIM</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="" class="btn btn-default btn-flat">NÃO</a>
@@ -114,22 +114,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header"></li>
                 <!-- Optionally, you can add icons to the links -->
-                <li class="active"><a href="ExibeMedico.php"><i class="fa fa-fw fa-user-md"></i> <span>Médicos</span></a></li>
-                <li><a href="ExibePaciente.php"><i class="ion ion-person-add"></i> <span>Pacientes</span></a></li>
-                <li><a href="ExibeAtend.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimentos</span></a></li>
-                <li><a href="ExibeAgend.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
-                <li class="treeview">
-                    <a><i class="fa fa-user-plus"></i> <span>Inserir</span>
-                        <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="Medico.php"> <i class="fa fa-fw fa-user-md"></i> Médico</a></li>
-                        <li><a href="Paciente.php"> <i class="ion ion-person-add"></i> Paciente</a></li>
-                        <li><a href="Agendamento.php"> <i class="fa fa-book"></i> Agendamento</a></li>
-                    </ul>
-                </li>
+                <li><a href="ExibeAtendMed.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimentos</span></a></li>
+                <li class="active"><a href="ExibeAgendMed.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -143,40 +129,46 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main content -->
         <section class="content container-fluid">
 
-            <!--------------------------
-             | Your Page Content Here |
-             -------------------------->
+       <!--------------------------
+        | Your Page Content Here |
+        -------------------------->
 
-            <!-- Main content -->
-            <section class="content">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="box">
-                            <div class="box-header">
-                                <h3 class="box-title">Médicos</h3>
-                            </div>
-                            <!-- /.box-header -->
-                            <div class="box-body">
-                                <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>Nome</th>
-                                        <th>CRM</th>
-                                        <th>CPF</th>
-                                        <th>Opções</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Agendamentos</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Paciente(s)</th>
+                                    <th>Médico(s)</th>
+                                    <th>Data</th>
+                                    <th>Horário</th>
+                                    <th>Opções</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                                    <?php
-                                    while ($row = mysqli_fetch_object($con->medicos)) {
-                                        echo "<tr>
-                                          <td>$row->nome</td>
-                                          <td>$row->crm</td>
-                                          <td>$row->cpf</td>
+                                <?php
+                                while ($row = mysqli_fetch_object($con->query)) {
+                                    echo "<tr>
+                                          <td>$row->medico</td>
+                                          <td>$row->paciente</td>
+                                          <td>$row->data</td>
+                                          <td>$row->hora</td>
                                           <td align=\"center\">
+                                        <a href=\"AtendimentoMed.php?id= $row->id \" <button type=\"button\" class=\"btn btn-success\">
+                                            Atender
+                                        </button>
+                                        </a>
 
-                                        <a href=\"EditMedico.php?crm= $row->crm \" <button type=\"button\" class=\"btn btn-warning\">
+                                        <a href=\"EditAgendamentoMed.php?id= $row->id \" <button type=\"button\" class=\"btn btn-warning\">
                                             Editar
                                         </button>
                                         </a>
@@ -191,10 +183,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <div class=\"modal-header\">
                                             <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">
                                                 <span aria-hidden=\"true\">&times;</span></button>
-                                            <h4 class=\"modal-title\">Você deseja realmente deletar esse Médico?</h4>
+                                            <h4 class=\"modal-title\">Você deseja realmente deletar esse agendamento?</h4>
                                         </div>
                                         <div class=\"modal-footer\">
-                                            <a href=\"../../Controller/controller.php?crm=$row->crm &enviar=DelMedico\"
+                                            <a href=\"../../Controller/controller.php?id=$row->id &enviar=DelAgendaMed\"
                                                 <button type=\"button\" class=\"btn btn-default pull-left\">
                                                     Sim
                                                 </button>
@@ -210,113 +202,113 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                        
                                     </td>
                                 </tr>";
-                                    }
-                                    ?>
-                                    </tbody>
+                                }
+                                ?>
+                                </tbody>
 
-                                </table>
+                            </table>
 
-                                <div class="modal modal-info fade" id="modal-info-cad">
-                                    <div class="modal-dialog" style="margin-top: 15%">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span></button>
-                                                <h3 class="modal-title" align="center">Médico cadastrado com sucesso.</h3>
-                                            </div>
+                            <div class="modal modal-info fade" id="modal-info-cad">
+                                <div class="modal-dialog" style="margin-top: 15%">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h3 class="modal-title" align="center">Agendamento efetuado com sucesso.</h3>
                                         </div>
-                                        <!-- /.modal-content -->
                                     </div>
-                                    <!-- /.modal-dialog -->
+                                    <!-- /.modal-content -->
                                 </div>
-                                <!-- /.modal -->
-
-                                <div class="modal modal-danger fade" id="modal-danger-cad">
-                                    <div class="modal-dialog" style="margin-top: 15%">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span></button>
-                                                <h3 class="modal-title" align="center">Erro ao cadastrar médico: <?php print($_GET['erro']); ?> </h3>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-                                <!-- /.modal -->
-
-                                <div class="modal modal-info fade" id="modal-info">
-                                    <div class="modal-dialog" style="margin-top: 15%">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span></button>
-                                                <h3 class="modal-title" align="center">Cadastro médico editado com sucesso.</h3>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-                                <!-- /.modal -->
-
-                                <div class="modal modal-danger fade" id="modal-danger">
-                                    <div class="modal-dialog" style="margin-top: 15%">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span></button>
-                                                <h3 class="modal-title" align="center">Erro ao editar cadastro médico: <?php print($_GET['erro']); ?> </h3>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-                                <!-- /.modal -->
-
-                                <div class="modal modal-info fade" id="modal-info-del">
-                                    <div class="modal-dialog" style="margin-top: 15%">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span></button>
-                                                <h3 class="modal-title" align="center">Cadastro médico deletado com sucesso.</h3>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-                                <!-- /.modal -->
-
-                                <div class="modal modal-danger fade" id="modal-danger-del">
-                                    <div class="modal-dialog" style="margin-top: 15%">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span></button>
-                                                <h3 class="modal-title" align="center">Erro ao Deletar: <?php print($_GET['erro']); ?> </h3>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-                                <!-- /.modal -->
-
+                                <!-- /.modal-dialog -->
                             </div>
-                            <!-- /.box-body -->
-                        </div>
-                        <!-- /.box -->
-                    </div>
-                    <!-- /.col -->
-                </div>
-                <!-- /.row -->
+                            <!-- /.modal -->
 
-            </section>
-            <!-- /.content -->
+                            <div class="modal modal-danger fade" id="modal-danger-cad">
+                                <div class="modal-dialog" style="margin-top: 15%">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h3 class="modal-title" align="center">Erro ao efetuar Agendamento: <?php print($_GET['erro']); ?> </h3>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+
+                            <div class="modal modal-info fade" id="modal-info">
+                                <div class="modal-dialog" style="margin-top: 15%">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h3 class="modal-title" align="center">Agendamento editado com sucesso.</h3>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+
+                            <div class="modal modal-danger fade" id="modal-danger">
+                                <div class="modal-dialog" style="margin-top: 15%">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h3 class="modal-title">Erro ao editar agendamento: <?php print($_GET['erro']); ?> </h3>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+
+                            <div class="modal modal-info fade" id="modal-info-del">
+                                <div class="modal-dialog" style="margin-top: 15%">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h3 class="modal-title" align="center">Agendamento deletado com sucesso.</h3>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+
+                            <div class="modal modal-danger fade" id="modal-danger-del">
+                                <div class="modal-dialog" style="margin-top: 15%">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h3 class="modal-title">Erro ao Deletar: <?php print($_GET['erro']); ?> </h3>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+        </section>
+        <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
 

@@ -216,7 +216,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                                 </table>
 
-                                <div class="modal modal-info fade" id="modal-info">
+
+                                <div class="modal modal-info fade" id="modal-info-cad">
+                                    <div class="modal-dialog" style="margin-top: 15%">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span></button>
+                                                <h3 class="modal-title" align="center">Atendimento efetuado com sucesso.</h3>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!-- /.modal -->
+
+                                <div class="modal modal-danger fade" id="modal-danger-cad">
+                                    <div class="modal-dialog" style="margin-top: 15%">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span></button>
+                                                <h3 class="modal-title" align="center">Erro ao efetuar Atendimento: <?php print($_GET['erro']); ?> </h3>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!-- /.modal -->
+
+                                <div class="modal modal-info fade" id="modal-info-edit">
                                     <div class="modal-dialog" style="margin-top: 15%">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -231,7 +262,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                                 <!-- /.modal -->
 
-                                <div class="modal modal-danger fade" id="modal-danger">
+                                <div class="modal modal-danger fade" id="modal-danger-edit">
                                     <div class="modal-dialog" style="margin-top: 15%">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -337,15 +368,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </body>
 <?php
 
-if (!empty($_GET['valorEdit'])) {
-    $resultado = $_GET['valorEdit'];
+if (!empty($_GET['valor'])) {
+    $resultado = $_GET['valor'];
 
     if ($resultado == 1) {
         ?>
 
         <script>
             $(document).ready(function () {
-                $("#modal-info").modal();
+                $("#modal-info-cad").modal();
             });
         </script>
     <?php
@@ -355,7 +386,33 @@ if (!empty($_GET['valorEdit'])) {
 
         <script>
             $(document).ready(function () {
-                $("#modal-danger").modal();
+                $("#modal-danger-cad").modal();
+            });
+        </script>
+
+        <?php
+    }
+}
+
+if (!empty($_GET['valorEdit'])) {
+    $resultado = $_GET['valorEdit'];
+
+    if ($resultado == 1) {
+        ?>
+
+        <script>
+            $(document).ready(function () {
+                $("#modal-info-edit").modal();
+            });
+        </script>
+    <?php
+
+    }elseif ($resultado == 2){
+    ?>
+
+        <script>
+            $(document).ready(function () {
+                $("#modal-danger-edit").modal();
             });
         </script>
 

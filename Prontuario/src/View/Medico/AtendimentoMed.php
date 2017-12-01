@@ -1,8 +1,3 @@
-<?php require "../../Controller/Control.php";
-$con = new  Control();
-$con->estados();
-$con->especialidades();
-?>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -59,7 +54,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="Home.php" class="logo">
+    <a href="HomeMedico.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"> <i class="fa fa-plus-square"></i><b> PM</b></span>
       <!-- logo for regular state and mobile devices -->
@@ -94,7 +89,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="/ProntuarioMedico/login" class="btn btn-default btn-flat">SIM</a>
+                  <a href="/ProntuarioMedico/loginMedico" class="btn btn-default btn-flat">SIM</a>
                 </div>
                 <div class="pull-right">
                   <a href="" class="btn btn-default btn-flat">NÃO</a>
@@ -124,22 +119,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header"></li>
                 <!-- Optionally, you can add icons to the links -->
-                <li><a href="ExibeMedico.php"><i class="fa fa-fw fa-user-md"></i> <span>Médicos</span></a></li>
-                <li><a href="ExibePaciente.php"><i class="ion ion-person-add"></i> <span>Pacientes</span></a></li>
-                <li><a href="ExibeAtend.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimentos</span></a></li>
-                <li><a href="ExibeAgend.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
-                <li class=" active treeview">
-                    <a href="#"><i class="fa fa-user-plus"></i> <span>Inserir</span>
-                        <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="active"><a href="Medico.php"> <i class="fa fa-fw fa-user-md"></i> Médico</a></li>
-                        <li><a href="Paciente.php"> <i class="ion ion-person-add"></i> Paciente</a></li>
-                        <li><a href="Agendamento.php"> <i class="fa fa-book"></i> Agendamento</a></li>
-                    </ul>
-                </li>
+                <li class="active"><a href="ExibeAtendMed.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimentos</span></a></li>
+                <li><a href="ExibeAgendMed.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -157,196 +138,129 @@ scratch. This page gets rid of all links and provides the needed markup only.
   | Your Page Content Here |
   -------------------------->
       <!-- SELECT2 EXAMPLE -->
-      <div class="box box-default" >
+      <div class="box box-default">
         <div class="box-header with-border">
-          <h3 class="box-title">Inserir Médico</h3>
+          <h3 class="box-title">Atendimento</h3>
         </div>
 
-     <form action="../../Controller/controller.php" method="GET">
+       <form action="../../Controller/controller.php" method="GET">
 
-        <!-- /.box-header -->
         <div class="box-body" align="center">
           <div class="row" align="left">
-            <div class="col-md-3" >
-              <div class="form-group" >
-                <label for="CRM">CRM:</label>
-                <input class="form-control" name="crm" placeholder="CRM">
-              </div>
-            </div>
-            <!-- /.col -->
 
-            <div class="col-md-3">
+              <input type="hidden" name="id" value="<?php echo $_GET['id'] ?>" />
+
+            <div class="col-md-5">
               <div class="form-group">
-                <label for="Nome">Nome:</label>
-                <input class="form-control" name="nome" placeholder="Nome">
+                <label for="Queixa">Queixa Principal:</label>
+                <input class="form-control" name="queixa" placeholder="Queixa Principal">
               </div>
-
             </div>
-            <!-- /.col -->
-            <div class="col-md-3">
+
+            <div class="col-md-5">
               <div class="form-group">
-                <label for="Endereço">Endereço:</label>
-                <input class="form-control" name="endereco" placeholder="Endereço">
+                <label for="Historico">Histórico:</label>
+                <input class="form-control" name="historico" placeholder="Histórico">
               </div>
-
             </div>
-            <!-- /.col -->
-            <div class="col-md-3">
+
+            <div class="col-md-5">
               <div class="form-group">
-                <label for="Bairro">Bairro:</label>
-                <input class="form-control" name="bairro" placeholder="Bairro">
+                <label for="NomeMae">Problemas Renais:</label>
+                <input class="form-control" name="proRen" placeholder="Problemas Renais">
               </div>
             </div>
-            <!-- /.col -->
-            <div class="col-md-3">
 
+            <div class="col-md-5">
               <div class="form-group">
-                <label for="Complemento">Complemento:</label>
-                <input class="form-control" name="complemento" placeholder="Complemento">
+                <label for="pa">Problemas Articulares:</label>
+                <input class="form-control" name="proArt" placeholder="Problemas Articulares">
               </div>
-
             </div>
-            <!-- /.col -->
-            <div class="col-md-3">
+
+            <div class="col-md-5">
               <div class="form-group">
-                  <label for="estados">Estado:</label>
-                  <select class="form-control" name="estado" id="estados" style="width: 100%">
-
-                      <?php
-                      while ( $row = mysqli_fetch_assoc( $con->queryEstd) ) {
-                          ?>
-                          <option value="<?php echo $row['cod_estados']?>"> <?php echo $row['sigla']?> </option>';
-
-                          <?php
-                      }
-                      ?>
-
-                  </select>
+                <label for="pc">Problemas Cardiacos:</label>
+                <input class="form-control" name="proCard" placeholder="Problemas Cardiacos">
               </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-5">
               <div class="form-group">
-                  <label for="cidades">Cidade:</label>
-                  <select class="form-control" name="cidade" id="cidades" style="width: 100%;">
-                      <option value="">Selecione um estado </option>
-                  </select>
+                <label for="pg">Problemas Gastricos:</label>
+                <input class="form-control" name="proGast" placeholder="Problemas Gastricos">
               </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-5">
               <div class="form-group">
-                <label>CEP:</label>
-                <div class="input-group">
-                  <input name="cep" type="text" class="form-control" data-inputmask='"mask":"99.999-999"' data-mask>
-                </div>
+                <label for="pr">Problemas Respiratórios:</label>
+                <input class="form-control" name="proResp" placeholder="Problemas Respiratórios">
               </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-5">
               <div class="form-group">
-                <label>CPF:</label>
-                <div class="input-group">
-                  <input name="cpf" type="text" class="form-control" data-inputmask='"mask":"999.999.999-99"' data-mask>
-                </div>
+                <label for="alergias">Alergias:</label>
+                <input class="form-control" name="alergias" placeholder="Alergias">
               </div>
             </div>
 
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>RG:</label>
-                <div class="input-group">
-                  <input name="rg" type="text" class="form-control" data-inputmask='"mask":"999999999999-9"' data-mask>
-                </div>
-              </div>
+
+            <div class="col-md-1" style="width: 20%">
+              <label>Hepatite :</label>
+              <label>
+                Sim
+                <input type="radio" name="hepatite" class="minimal" value="1">
+              </label>
+              <label>
+                Não
+                <input type="radio" name="hepatite" class="minimal" value="0" checked>
+              </label>
             </div>
 
-            <!-- Date -->
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>Data da Nascimento:</label>
-                <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input name="data_nascimento"  class="form-control pull-right" id="datepicker">
-                </div>
-                <!-- /.input group -->
-              </div>
-            </div>
-            <!-- /.form group -->
-
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="Naturalidade">Naturalidade:</label>
-                <input name="naturalidade" class="form-control" id="Naturalidade" placeholder="Naturalidade">
-              </div>
+            <div class="col-md-1" style="width: 20%">
+              <label>Gravidez :</label>
+              <label>
+                Sim
+                <input type="radio" name="gravidez" class="minimal" value="1" >
+              </label>
+              <label>
+                Não
+                <input type="radio" name="gravidez" class="minimal" value="0" checked>
+              </label>
             </div>
 
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="Nacionalidade">Nacionalidade:</label>
-                <input name="nacionalidade" class="form-control" id="Nacionalidade" placeholder="Nacionalidade">
-              </div>
+            <div class="col-md-1" style="width: 20%">
+              <label>Diabetes :</label>
+              <label>
+                Sim
+                <input type="radio" name="diabetes" class="minimal" value="1">
+              </label>
+              <label>
+                Não
+                <input type="radio" name="diabetes" class="minimal" value="0" checked>
+              </label>
             </div>
 
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="Email">Email:</label>
-                <input name="email" class="form-control" id="Email" placeholder="Email">
-              </div>
+
+            <div class="col-md-1" style="width: 25%">
+              <label>Utiliza Medicamentos :</label>
+              <label>
+                Sim
+                <input type="radio" name="medicamentos" class="minimal" value="1">
+              </label>
+              <label>
+                Não
+                <input type="radio" name="medicamentos" class="minimal" value="0" checked>
+              </label>
             </div>
-
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>Telefone:</label>
-                <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-phone"></i>
-                  </div>
-                  <input name="telefone" type="text" class="form-control" data-inputmask='"mask":"(99)9999-9999"' data-mask>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>Celular:</label>
-                <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-phone"></i>
-                  </div>
-                  <input name="celular" type="text" class="form-control" data-inputmask='"mask":"(99)99999-9999"' data-mask>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="form-group">
-                <label for="Trabalho">Trabalho:</label>
-                <input name="trabalho" class="form-control" id="Trabalho" placeholder="Email">
-              </div>
-            </div>
-
-              <div class="col-md-6">
-                  <div class="form-group">
-                      <label for="especialidades">Especialidades:</label>
-                      <select  class="form-control select2" multiple="multiple" name="especialidades[]"  style="width: 100%">
-
-                          <?php
-                          while ( $row = mysqli_fetch_assoc( $con->espec) ) {
-                              echo '<option value="'.$row['id'].'">'.utf8_encode($row['nome']).'</option>';
-                          }
-                          ?>
-
-                      </select>
-                  </div>
-              </div>
-
           </div>
-          <!-- /.row -->
+
+
           <div style="width: 15%; margin-top: 2%">
-            <button type="submit" name="enviar" value="InserirMedico" class="btn btn-block btn-primary">Cadastrar</button>
+
+              <button type="submit" name="enviar" value="InserirAtendMed" class="btn btn-block btn-primary">Cadastrar</button>
 
               <div class="modal modal-info fade" id="modal-info">
                   <div class="modal-dialog" style="margin-top: 15%">
@@ -354,7 +268,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span></button>
-                              <h2 class="modal-title">Médico cadastrado com sucesso.</h2>
+                              <h2 class="modal-title">Atendimento cadastrado com sucesso.</h2>
                           </div>
                       </div>
                       <!-- /.modal-content -->
@@ -378,15 +292,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </div>
               <!-- /.modal -->
 
-
           </div>
+
         </div>
         <!-- /.box-body -->
-     </form>
-
+       </form>
       </div>
       <!-- /.box -->
-
 
     </section>
     <!-- /.content -->
@@ -407,8 +319,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-<script type="text/javascript" src="../../../public/dist/js/CidEstd/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="../../../public/dist/js/CidEstd/funcao.js"></script>
+
 <!-- jQuery 3 -->
 <script src="../../../public/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -446,9 +357,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         $('.select2').select2()
 
         //Datemask dd/mm/yyyy
-        $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'yyyy/mm/dd' })
+        $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
         //Datemask2 mm/dd/yyyy
-        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'yyyy/mm/dd' })
+        $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
         //Money Euro
         $('[data-mask]').inputmask()
 

@@ -136,13 +136,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
                         <div class="inner">
-                            <h3>Consultas</h3>
-                            <p>Listar todas as consultas</p>
+                            <h3>Agendamentos</h3>
+                            <p>Exibir agendamentos</p>
                         </div>
                         <div class="icon">
-                            <i class="fa fa-search"></i>
+                            <i class="fa fa-book"></i>
                         </div>
-                        <a href="Consultas.php" class="small-box-footer"> Listar <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="ExibeAgendMed.php" class="small-box-footer"> Exibir <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -150,14 +150,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
                         <div class="inner">
-                            <h3>Atendimento</h3>
+                            <h3>Atendimentos</h3>
 
-                            <p>Adicionar Novo Atendimento</p>
+                            <p>Exibir Atendimentos</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-fw fa-stethoscope"></i>
                         </div>
-                        <a href="MedAtend.php" class="small-box-footer">Atender <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="ExibeAtendMed.php" class="small-box-footer">Exibir <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->

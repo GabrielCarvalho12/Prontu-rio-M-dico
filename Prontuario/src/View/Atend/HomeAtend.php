@@ -55,7 +55,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="../Adm/Home.php" class="logo">
+        <a href="HomeAtend.php" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"> <i class="fa fa-plus-square"></i><b> PM</b></span>
             <!-- logo for regular state and mobile devices -->
@@ -131,12 +131,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   | Your Page Content Here |
   -------------------------->
             <!-- Small boxes (Stat box) -->
-            <div class="row" style="margin-top: 17%; margin-left: 10%">
+            <div class="row" style="margin-top: 11%; margin-left: 10%">
                 <div class="col-lg-5 col-xs-8">
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
                         <div class="inner">
-                            <h3>Agendamento</h3>
+                            <h3>Agendar</h3>
                             <p>Agendar Novo Atendimento</p>
                         </div>
                         <div class="icon">
@@ -146,6 +146,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
                 <!-- ./col -->
+
+                <div class="col-lg-5 col-xs-6" >
+                    <!-- small box -->
+                    <div class="small-box bg-light-blue">
+                        <div class="inner">
+                            <h3>Agendamentos</h3>
+                            <p>Exibir agendamentos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-list-alt"></i>
+                        </div>
+                        <a href="ExibeAgendAtend.php" class="small-box-footer"> Exibir <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+
                 <div class="col-lg-5 col-xs-6" style="float: left%">
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
@@ -161,6 +177,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
                 <!-- ./col -->
+
+                <div class="col-lg-5 col-xs-6" >
+                    <!-- small box -->
+                    <div class="small-box bg-light-blue">
+                        <div class="inner">
+                            <h3>Pacientes</h3>
+                            <p>Exibir Pacientes</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-list-alt"></i>
+                        </div>
+                        <a href="ExibePacAtend.php" class="small-box-footer"> Exibir <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+
             </div>
             <!-- /.row -->
 

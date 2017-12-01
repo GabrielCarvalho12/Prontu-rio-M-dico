@@ -216,6 +216,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                                 </table>
 
+                                <div class="modal modal-info fade" id="modal-info-cad">
+                                    <div class="modal-dialog" style="margin-top: 15%">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span></button>
+                                                <h3 class="modal-title" align="center">Paciente cadastrado com sucesso.</h3>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!-- /.modal -->
+
+                                <div class="modal modal-danger fade" id="modal-danger-cad">
+                                    <div class="modal-dialog" style="margin-top: 15%">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span></button>
+                                                <h3 class="modal-title" align="center">Erro ao cadastrar paciente: <?php print($_GET['erro']); ?> </h3>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!-- /.modal -->
+
                                 <div class="modal modal-info fade" id="modal-info">
                                     <div class="modal-dialog" style="margin-top: 15%">
                                         <div class="modal-content">
@@ -336,6 +366,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </script>
 </body>
 <?php
+
+if (!empty($_GET['valor'])) {
+    $resultado = $_GET['valor'];
+
+    if ($resultado == 1) {
+        ?>
+
+        <script>
+            $(document).ready(function () {
+                $("#modal-info-cad").modal();
+            });
+        </script>
+    <?php
+
+    }elseif ($resultado == 2){
+    ?>
+
+        <script>
+            $(document).ready(function () {
+                $("#modal-danger-cad").modal();
+            });
+        </script>
+
+        <?php
+    }
+}
 
 if (!empty($_GET['valorEdit'])) {
     $resultado = $_GET['valorEdit'];

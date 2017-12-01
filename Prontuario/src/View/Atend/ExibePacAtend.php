@@ -49,7 +49,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="Home.php" class="logo">
+        <a href="HomeAtend.php" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"> <i class="fa fa-plus-square"></i><b> PM</b></span>
             <!-- logo for regular state and mobile devices -->
@@ -84,7 +84,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="/ProntuarioMedico/login" class="btn btn-default btn-flat">SIM</a>
+                                    <a href="/ProntuarioMedico/loginAtend" class="btn btn-default btn-flat">SIM</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="" class="btn btn-default btn-flat">NÃO</a>
@@ -114,10 +114,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header"></li>
                 <!-- Optionally, you can add icons to the links -->
-                <li class="active"><a href="ExibeMedico.php"><i class="fa fa-fw fa-user-md"></i> <span>Médicos</span></a></li>
-                <li><a href="ExibePaciente.php"><i class="ion ion-person-add"></i> <span>Pacientes</span></a></li>
-                <li><a href="ExibeAtend.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimentos</span></a></li>
-                <li><a href="ExibeAgend.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
+                <li class="active"><a href="ExibePacAtend.php"><i class="ion ion-person-add"></i> <span>Pacientes</span></a></li>
+                <li><a href="ExibeAgendAtend.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
                 <li class="treeview">
                     <a><i class="fa fa-user-plus"></i> <span>Inserir</span>
                         <span class="pull-right-container">
@@ -125,9 +123,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="Medico.php"> <i class="fa fa-fw fa-user-md"></i> Médico</a></li>
-                        <li><a href="Paciente.php"> <i class="ion ion-person-add"></i> Paciente</a></li>
-                        <li><a href="Agendamento.php"> <i class="fa fa-book"></i> Agendamento</a></li>
+                        <li><a href="AtendPaciente.php"> <i class="ion ion-person-add"></i> Paciente</a></li>
+                        <li><a href="AgendAtend.php"> <i class="fa fa-book"></i> Agendamento</a></li>
                     </ul>
                 </li>
             </ul>
@@ -153,7 +150,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="col-xs-12">
                         <div class="box">
                             <div class="box-header">
-                                <h3 class="box-title">Médicos</h3>
+                                <h3 class="box-title">Pacientes</h3>
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
@@ -161,22 +158,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <thead>
                                     <tr>
                                         <th>Nome</th>
-                                        <th>CRM</th>
                                         <th>CPF</th>
+                                        <th>RG</th>
                                         <th>Opções</th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
                                     <?php
-                                    while ($row = mysqli_fetch_object($con->medicos)) {
+                                    while ($row = mysqli_fetch_object($con->pacientes)) {
                                         echo "<tr>
                                           <td>$row->nome</td>
-                                          <td>$row->crm</td>
                                           <td>$row->cpf</td>
+                                          <td>$row->rg</td>
                                           <td align=\"center\">
 
-                                        <a href=\"EditMedico.php?crm= $row->crm \" <button type=\"button\" class=\"btn btn-warning\">
+                                        <a href=\"EditPacAtend.php?cpf=$row->cpf \" <button type=\"button\" class=\"btn btn-warning\">
                                             Editar
                                         </button>
                                         </a>
@@ -191,10 +188,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <div class=\"modal-header\">
                                             <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">
                                                 <span aria-hidden=\"true\">&times;</span></button>
-                                            <h4 class=\"modal-title\">Você deseja realmente deletar esse Médico?</h4>
+                                            <h4 class=\"modal-title\">Você deseja realmente deletar esse paciente?</h4>
                                         </div>
                                         <div class=\"modal-footer\">
-                                            <a href=\"../../Controller/controller.php?crm=$row->crm &enviar=DelMedico\"
+                                            <a href=\"../../Controller/controller.php?cpf=$row->cpf&enviar=DelPacienteAtend\"
                                                 <button type=\"button\" class=\"btn btn-default pull-left\">
                                                     Sim
                                                 </button>
@@ -222,7 +219,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span></button>
-                                                <h3 class="modal-title" align="center">Médico cadastrado com sucesso.</h3>
+                                                <h3 class="modal-title" align="center">Paciente cadastrado com sucesso.</h3>
                                             </div>
                                         </div>
                                         <!-- /.modal-content -->
@@ -237,7 +234,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span></button>
-                                                <h3 class="modal-title" align="center">Erro ao cadastrar médico: <?php print($_GET['erro']); ?> </h3>
+                                                <h3 class="modal-title" align="center">Erro ao cadastrar paciente: <?php print($_GET['erro']); ?> </h3>
                                             </div>
                                         </div>
                                         <!-- /.modal-content -->
@@ -252,7 +249,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span></button>
-                                                <h3 class="modal-title" align="center">Cadastro médico editado com sucesso.</h3>
+                                                <h3 class="modal-title" align="center">Cadastro paciente editado com sucesso.</h3>
                                             </div>
                                         </div>
                                         <!-- /.modal-content -->
@@ -267,7 +264,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span></button>
-                                                <h3 class="modal-title" align="center">Erro ao editar cadastro médico: <?php print($_GET['erro']); ?> </h3>
+                                                <h3 class="modal-title" align="center">Erro ao editar cadastro paciente: <?php print($_GET['erro']); ?> </h3>
                                             </div>
                                         </div>
                                         <!-- /.modal-content -->
@@ -282,7 +279,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span></button>
-                                                <h3 class="modal-title" align="center">Cadastro médico deletado com sucesso.</h3>
+                                                <h3 class="modal-title" align="center">Cadastro paciente deletado com sucesso.</h3>
                                             </div>
                                         </div>
                                         <!-- /.modal-content -->

@@ -353,8 +353,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                         </div>
                         <!-- /.row -->
-                        <div style="width: 25%;">
-                            <button type="submit" name="enviar" value="EditarMedico" class="btn btn-block btn-primary">Cadastrar</button>
+                        <div style="width: 15%; margin-top: 2%">
+                            <button type="submit" name="enviar" value="EditarMedico" class="btn btn-block btn-primary">Editar</button>
 
                             <div class="modal modal-info fade" id="modal-info">
                                 <div class="modal-dialog" style="margin-top: 15%">

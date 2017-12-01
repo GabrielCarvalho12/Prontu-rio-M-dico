@@ -412,12 +412,12 @@ class Conexao
 
         if ($inserir) {
 
-            header("Location: ../View/Medico/ExibeAtend.php?valor=1");
+            header("Location: ../View/Adm/ExibeAtend.php?valor=1");
 
         } else {
             $var = mysqli_error($this->getBanco());
 
-            header("Location: ../View/Medico/ExibeAtend.php?valor=2&erro=".$var);
+            header("Location: ../View/Adm/ExibeAtend.php?valor=2&erro=".$var);
         }
     }
 
@@ -455,12 +455,12 @@ class Conexao
 
         if ($deletar) {
 
-            header("Location: ../View/Adm/ExibeAtend.php?valorDel=1");
+            header("Location: ../View/Adm/ExibeAtendMed.php?valorDel=1");
 
         } else {
             $var = mysqli_error($this->getBanco());
 
-            header("Location: ../View/Adm/ExibeAtend.php?valorDel=2&erro=".$var);
+            header("Location: ../View/Adm/ExibeAtendMed.php?valorDel=2&erro=".$var);
         }
     }
 
@@ -525,6 +525,253 @@ class Conexao
         }
     }
 
+
+    public function EditAgendaMed($id, $data, $hora, $medico, $paciente)
+    {
+        $this->Construct();
+
+        $query = "UPDATE agendamento 
+                  SET data = '$data', hora = '$hora', medico_crm = '$medico', paciente_cpf = '$paciente' 
+                  WHERE cod_agendamento = '$id' ";
+
+        $atualizar = mysqli_query($this->getBanco(),$query);
+
+        if ($atualizar) {
+
+            header("Location: ../View/Medico/ExibeAgendMed.php?valorEdit=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Medico/ExibeAgendMed.php?valorEdit=2&erro=".$var);
+        }
+
+    }
+
+    function DelAgendaMed($id)
+    {
+        $this->Construct();
+
+        $query = "DELETE FROM agendamento WHERE cod_agendamento = '$id'";
+        $deletar=mysqli_query($this->getBanco(),$query);
+
+        if ($deletar) {
+
+            header("Location: ../View/Medico/ExibeAgendMed.php?valorDel=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Medico/ExibeAgendMed.php?valorDel=2&erro=".$var);
+        }
+    }
+
+    public function InserirAtendMed ($id, $queixa, $historico, $proRen, $proArt, $proCard, $proGast, $proResp, $alergias, $hepatite,
+                                  $gravidez, $diabetes, $medicamentos)
+    {
+        $this->Construct();
+
+        $query = "INSERT INTO atendimento (agendamento_cod_agendamento ,queixa_principal, 
+                  historico,problemas_renais,problemas_articulares,
+                  problemas_cardiacos,problemas_respiratorios,problemas_gastricos,
+                  alergias,hepatite,gravidez,diabetes,utiliza_medicamentos)
+                  VALUES ('$id', '$queixa', '$historico', '$proRen', 
+                  '$proArt', '$proCard', '$proResp', '$proGast', 
+                  '$alergias', '$hepatite', '$gravidez', '$diabetes','$medicamentos' )";
+
+        $inserir = mysqli_query($this->getBanco(), $query);
+
+        if ($inserir) {
+
+            header("Location: ../View/Medico/ExibeAtendMed.php?valor=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Medico/ExibeAtendMed.php?valor=2&erro=".$var);
+        }
+    }
+
+    public function EditAtendMed($id, $queixa, $historico, $proRen, $proArt, $proCard, $proGast, $proResp, $alergias, $hepatite,
+                                 $gravidez, $diabetes, $medicamentos)
+    {
+        $this->Construct();
+
+        $query = "UPDATE atendimento 
+                  SET queixa_principal = '$queixa', historico = '$historico', problemas_renais = '$proRen', problemas_articulares = '$proArt',
+                  problemas_cardiacos = '$proCard', problemas_respiratorios = '$proGast', problemas_gastricos = '$proResp',
+                  alergias = '$alergias', hepatite = '$hepatite', gravidez = '$gravidez', diabetes = '$diabetes', utiliza_medicamentos = '$medicamentos'
+                  WHERE agendamento_cod_agendamento = '$id' ";
+
+        $atualizar = mysqli_query($this->getBanco(),$query);
+
+        if ($atualizar) {
+
+            header("Location: ../View/Medico/ExibeAtendMed.php?valorEdit=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Medico/ExibeAtendMed.php?valorEdit=2&erro=".$var);
+        }
+
+    }
+
+    function DelAtendMed($id)
+    {
+        $this->Construct();
+
+        $query = "DELETE FROM atendimento WHERE agendamento_cod_agendamento = '$id'";
+        $deletar=mysqli_query($this->getBanco(),$query);
+
+        if ($deletar) {
+
+            header("Location: ../View/Medico/ExibeAtendMed.php?valorDel=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Medico/ExibeAtendMed.php?valorDel=2&erro=".$var);
+        }
+    }
+
+    public function InserirPacienteAtend ($cpf, $nome, $endereco, $bairro, $complemento, $cidade, $estado, $cep, $rg,
+                                     $data_nascimento, $naturalidade, $nacionalidade, $email, $telefone, $celular, $tipoSan, $NomePai, $NomeMae)
+    {
+        $this->Construct();
+
+        $data_sql= date("Y-m-d", strtotime($data_nascimento));
+
+        $query = "INSERT INTO paciente (cpf,nome,endereco,bairro,complemento,cidade,estado,cep,rg,
+                  data_nascimento,naturalidade,nacionalidade,email,telefone,celular,tipo_sanguineo,nome_pai,nome_mae)
+                  VALUES ('$cpf', '$nome', '$endereco', '$bairro', '$complemento',
+                  (SELECT nome FROM cidades WHERE cod_cidades = '$cidade' ORDER BY nome),
+                  (SELECT nome FROM estados where cod_estados = '$estado' ORDER BY sigla), 
+                  '$cep', '$rg','$data_sql', '$naturalidade', '$nacionalidade', 
+                  '$email', '$telefone', '$celular', '$tipoSan', '$NomePai', '$NomeMae' )";
+
+        $inserir = mysqli_query($this->getBanco(), $query);
+
+
+        if ($inserir) {
+
+            header("Location: ../View/Atend/ExibePacAtend.php?valor=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Atend/ExibePacAtend.php?valor=2&erro=".$var);
+        }
+    }
+
+    public function EditPacienteAtend ($cpf, $nome, $endereco, $bairro, $complemento, $cidade, $estado, $cep, $rg,
+                                  $data_nascimento, $naturalidade, $nacionalidade, $email, $telefone, $celular, $tipoSan, $NomePai, $NomeMae)
+    {
+        $this->Construct();
+
+        $data_sql= date("Y-m-d", strtotime($data_nascimento));
+
+        $query = "UPDATE paciente 
+                  SET nome = '$nome',endereco = '$endereco', complemento = '$complemento', bairro = '$bairro', 
+                  cidade = (SELECT nome FROM cidades WHERE cod_cidades = '$cidade' ORDER BY nome), 
+                  estado = (SELECT nome FROM estados where cod_estados = '$estado' ORDER BY sigla), 
+                  cep = '$cep', cpf = '$cpf', rg = '$rg',
+                  data_nascimento = '$data_sql', naturalidade = '$naturalidade', nacionalidade = '$nacionalidade', email = '$email', telefone = '$telefone',celular = '$celular', 
+                  tipo_sanguineo = '$tipoSan', nome_pai = '$NomePai', nome_mae = '$NomeMae'
+                  WHERE cpf = '$cpf' ";
+
+        $atualizar = mysqli_query($this->getBanco(),$query);
+
+        if ($atualizar) {
+
+            header("Location: ../View/Atend/ExibePacAtend.php?valorEdit=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Atend/ExibePacAtend.php?valorEdit=2&erro=".$var);
+        }
+
+    }
+
+    function DelPacienteAtend($cpf)
+    {
+        $this->Construct();
+
+        $query = "DELETE FROM paciente WHERE cpf = '$cpf'";
+        $deletar=mysqli_query($this->getBanco(),$query);
+
+        if ($deletar) {
+
+            header("Location: ../View/Atend/ExibePacAtend.php?valorDel=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Atend/ExibePacAtend.php?valorDel=2&erro=".$var);
+        }
+    }
+
+    public function InserirAgendaAtend ($data, $hora, $medico, $paciente)
+    {
+        $this->Construct();
+
+        $query = "INSERT INTO agendamento (data, hora, medico_crm, paciente_cpf)
+                  VALUES ('$data', '$hora', '$medico', '$paciente')";
+
+        $inserir = mysqli_query($this->getBanco(), $query);
+
+        if ($inserir) {
+
+            header("Location: ../View/Atend/ExibeAgendAtend.php?valor=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Atend/ExibeAgendAtend.php?valor=2&erro=".$var);
+        }
+    }
+
+
+    public function EditAgendaAtend($id, $data, $hora, $medico, $paciente)
+    {
+        $this->Construct();
+
+        $query = "UPDATE agendamento 
+                  SET data = '$data', hora = '$hora', medico_crm = '$medico', paciente_cpf = '$paciente' 
+                  WHERE cod_agendamento = '$id' ";
+
+        $atualizar = mysqli_query($this->getBanco(),$query);
+
+        if ($atualizar) {
+
+            header("Location: ../View/Atend/ExibeAgendAtend.php?valorEdit=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Atend/ExibeAgendAtend.php?valorEdit=2&erro=".$var);
+        }
+
+    }
+
+    function DelAgendaAtend($id)
+    {
+        $this->Construct();
+
+        $query = "DELETE FROM agendamento WHERE cod_agendamento = '$id'";
+        $deletar=mysqli_query($this->getBanco(),$query);
+
+        if ($deletar) {
+
+            header("Location: ../View/Atend/ExibeAgendAtend.php?valorDel=1");
+
+        } else {
+            $var = mysqli_error($this->getBanco());
+
+            header("Location: ../View/Atend/ExibeAgendAtend.php?valorDel=2&erro=".$var);
+        }
+    }
 
     public function getResult()
     {

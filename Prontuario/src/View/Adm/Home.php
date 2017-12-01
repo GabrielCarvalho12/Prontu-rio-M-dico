@@ -139,7 +139,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
                         <div class="inner">
-                            <h3>Agendamento</h3>
+                            <h3>Agendar</h3>
                             <p>Agendar Novo Atendimento</p>
                         </div>
                         <div class="icon">
@@ -183,13 +183,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
                         <div class="inner">
-                            <h3>Consultas</h3>
-                            <p>Listar todas as consultas</p>
+                            <h3>Exibir</h3>
+                            <p>Exibir todas as consultas</p>
                         </div>
                         <div class="icon">
-                            <i class="fa fa-search"></i>
+                            <i class="fa fa-list-alt"></i>
                         </div>
-                        <a href="ExibeAgend.php" class="small-box-footer"> Listar <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="ExibeAgend.php" class="small-box-footer"> Exibir <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -199,10 +199,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="small-box bg-light-blue">
                         <div class="inner">
                             <h3>Exibir</h3>
-                            <p>Listar todos os Médicos</p>
+                            <p>Exibir todos os Médicos</p>
                         </div>
                         <div class="icon">
-                            <i class="fa fa-search"></i>
+                            <i class="fa fa-list-alt"></i>
                         </div>
                         <a href="ExibeMedico.php" class="small-box-footer"> Exibir <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
@@ -214,25 +214,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="small-box bg-light-blue">
                         <div class="inner">
                             <h3>Exibir</h3>
-                            <p>Listar todos os Pacientes</p>
+                            <p>Exibir todos os Pacientes</p>
                         </div>
                         <div class="icon">
-                            <i class="fa fa-search"></i>
+                            <i class="fa fa-list-alt"></i>
                         </div>
                         <a href="ExibePaciente.php" class="small-box-footer"> Exibir <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
 
-                <div class="col-lg-5 col-xs-6" style="margin-top: 2%" >
+                <div class="col-lg-5 col-xs-6" style="margin-top: 2%; margin-left: 22%" >
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
                         <div class="inner">
                             <h3>Exibir</h3>
-                            <p>Listar todos os Atendimentos</p>
+                            <p>Exibir todos os Atendimentos</p>
                         </div>
                         <div class="icon">
-                            <i class="fa fa-search"></i>
+                            <i class="fa fa-list-alt"></i>
                         </div>
                         <a href="ExibeAtend.php" class="small-box-footer"> Exibir <i class="fa fa-arrow-circle-right"></i></a>
                     </div>

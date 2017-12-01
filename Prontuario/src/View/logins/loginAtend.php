@@ -37,7 +37,7 @@
     </div>
 
     <div class="login-logo">
-        <a><b>PRO</b>MED</a>
+        <a>Atendimento</a>
     </div>
     <!-- /.login-logo -->
 
@@ -70,8 +70,6 @@
         </form>
         <!-- /.social-auth-links -->
 
-        <a href="#">Eu esqueci minha senha</a><br>
-        <a href="register.html" class="text-center">Registrar um novo administrador</a>
 
     </div>
     <!-- /.login-box-body -->

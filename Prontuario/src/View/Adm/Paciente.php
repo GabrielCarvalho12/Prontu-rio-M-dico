@@ -336,7 +336,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
           </div>
           <!-- /.row -->
-          <div style="width: 25%;" >
+          <div style="width: 15%; margin-top: 2%" >
 
               <button type="submit" name="enviar" value="InserirPaciente" class="btn btn-block btn-primary">Cadastrar</button>
 

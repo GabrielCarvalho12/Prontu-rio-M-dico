@@ -62,7 +62,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="Home.php" class="logo">
+        <a href="HomeMedico.php" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"> <i class="fa fa-plus-square"></i><b> PM</b></span>
             <!-- logo for regular state and mobile devices -->
@@ -97,7 +97,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="/ProntuarioMedico/login" class="btn btn-default btn-flat">SIM</a>
+                                    <a href="/ProntuarioMedico/loginMedico" class="btn btn-default btn-flat">SIM</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="" class="btn btn-default btn-flat">NÃO</a>
@@ -127,22 +127,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header"></li>
                 <!-- Optionally, you can add icons to the links -->
-                <li><a href="ExibeMedico.php"><i class="fa fa-fw fa-user-md"></i> <span>Médicos</span></a></li>
-                <li><a href="ExibePaciente.php"><i class="ion ion-person-add"></i> <span>Pacientes</span></a></li>
-                <li class="active"><a href="ExibeAtend.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimentos</span></a></li>
-                <li><a href="ExibeAgend.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
-                <li class="treeview">
-                    <a href="#"><i class="fa fa-user-plus"></i> <span>Inserir</span>
-                        <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="Medico.php"> <i class="fa fa-fw fa-user-md"></i> Médico</a></li>
-                        <li><a href="Paciente.php"> <i class="ion ion-person-add"></i> Paciente</a></li>
-                        <li><a href="Agendamento.php"> <i class="fa fa-book"></i> Agendamento</a></li>
-                    </ul>
-                </li>
+                <li class="active"><a href="ExibeAtendMed.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimentos</span></a></li>
+                <li><a href="ExibeAgendMed.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -282,7 +268,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                         <div style="width: 15%; margin-top: 2%">
 
-                            <button type="submit" name="enviar" value="EditarAtend" class="btn btn-block btn-primary">Editar</button>
+                            <button type="submit" name="enviar" value="EditarAtendMed" class="btn btn-block btn-primary">Editar</button>
 
                             <div class="modal modal-info fade" id="modal-info">
                                 <div class="modal-dialog" style="margin-top: 15%">

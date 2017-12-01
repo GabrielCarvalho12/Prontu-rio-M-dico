@@ -35,7 +35,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
-<body background="public/dist/img/planodefundo.jpg" style="background-size: 100%" >
+<body background="public/dist/img/logohome1.jpg" style="background-size: cover" >
 
 
     <!-- Content Wrapper. Contains page content -->
@@ -51,7 +51,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Small boxes (Stat box) -->
             <div class="row">
 
-                <div class="col-lg-4 col-xs-4" style="margin-top: 32%" >
+                <div class="col-lg-4 col-xs-4" style="margin-top: 35%; width: 30%; margin-left: 3%" >
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
                         <div class="inner">
@@ -66,7 +66,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-4 col-xs-4" style="float: left; margin-top: 32%">
+                <div class="col-lg-4 col-xs-4" style="margin-top: 35%; width: 30%; margin-left: 2%">
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
                         <div class="inner">
@@ -81,7 +81,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-4 col-xs-4" style="float: left; margin-top: 32%">
+                <div class="col-lg-4 col-xs-4" style="margin-top: 35%; width: 30%; margin-left: 2%">
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
                         <div class="inner">
