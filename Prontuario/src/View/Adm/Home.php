@@ -184,7 +184,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="small-box bg-light-blue">
                         <div class="inner">
                             <h3>Exibir</h3>
-                            <p>Exibir todas as consultas</p>
+                            <p>Exibir Agendamentos</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-list-alt"></i>
@@ -199,7 +199,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="small-box bg-light-blue">
                         <div class="inner">
                             <h3>Exibir</h3>
-                            <p>Exibir todos os Médicos</p>
+                            <p>Exibir Médicos</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-list-alt"></i>
@@ -214,7 +214,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="small-box bg-light-blue">
                         <div class="inner">
                             <h3>Exibir</h3>
-                            <p>Exibir todos os Pacientes</p>
+                            <p>Exibir Pacientes</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-list-alt"></i>
@@ -229,7 +229,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="small-box bg-light-blue">
                         <div class="inner">
                             <h3>Exibir</h3>
-                            <p>Exibir todos os Atendimentos</p>
+                            <p>Exibir Atendimentos</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-list-alt"></i>

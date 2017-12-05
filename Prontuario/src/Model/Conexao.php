@@ -17,6 +17,7 @@ class Conexao
     private $resultPac;
     private $queryEsp;
     private $Espec;
+    private $NomePac;
 
 
     function Construct($servidor = "localhost", $usuario = "root", $senha = "", $nomeBanco="prontuario")
@@ -455,12 +456,12 @@ class Conexao
 
         if ($deletar) {
 
-            header("Location: ../View/Adm/ExibeAtendMed.php?valorDel=1");
+            header("Location: ../View/Adm/ExibeAtend.php?valorDel=1");
 
         } else {
             $var = mysqli_error($this->getBanco());
 
-            header("Location: ../View/Adm/ExibeAtendMed.php?valorDel=2&erro=".$var);
+            header("Location: ../View/Adm/ExibeAtend.php?valorDel=2&erro=".$var);
         }
     }
 
@@ -773,6 +774,28 @@ class Conexao
         }
     }
 
+    public function SelectTimeLine($cpf)
+    {
+        $this->Construct();
+
+        $query = "Select paciente.nome as nome, atendimento.queixa_principal as queixa, atendimento.historico as historico, 
+                  CAST(dataHora AS TIME) as hora, CAST(dataHora AS DATE) as data
+                  From atendimento
+                  inner join agendamento on atendimento.agendamento_cod_agendamento = agendamento.cod_agendamento 
+                  inner join paciente on paciente.cpf = agendamento.paciente_cpf
+                  where agendamento.paciente_cpf = '$cpf'";
+
+        $nome = $this->result = mysqli_query($this->getBanco(),$query);
+
+        while ( $row = mysqli_fetch_assoc( $nome ) ) {
+            $this->NomePac = $row["nome"];
+
+        }
+
+        $this->result = mysqli_query($this->getBanco(),$query);
+
+    }
+
     public function getResult()
     {
         return $this->result;
@@ -821,6 +844,11 @@ class Conexao
     public function getResultPac()
     {
         return $this->resultPac;
+    }
+
+    public function getNomePac()
+    {
+        return $this->NomePac;
     }
 
     public function Desconectar()

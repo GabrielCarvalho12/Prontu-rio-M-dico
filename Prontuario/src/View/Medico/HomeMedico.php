@@ -131,7 +131,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   | Your Page Content Here |
   -------------------------->
             <!-- Small boxes (Stat box) -->
-            <div class="row" style="margin-top: 17%; margin-left: 10%">
+            <div class="row" style="margin-top: 12%; margin-left: 10%">
                 <div class="col-lg-5 col-xs-8">
                     <!-- small box -->
                     <div class="small-box bg-light-blue">
@@ -158,6 +158,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <i class="fa fa-fw fa-stethoscope"></i>
                         </div>
                         <a href="ExibeAtendMed.php" class="small-box-footer">Exibir <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+
+                <div class="col-lg-5 col-xs-6" style="float: left; margin-left: 22%">
+                    <!-- small box -->
+                    <div class="small-box bg-light-blue">
+                        <div class="inner">
+                            <h3>Pacientes</h3>
+
+                            <p>Exibir histórico dos pacientes</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="ExibePacMed.php" class="small-box-footer">Exibir <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->

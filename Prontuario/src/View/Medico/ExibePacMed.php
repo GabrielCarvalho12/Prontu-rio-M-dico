@@ -84,7 +84,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="/ProntuarioMedico/login" class="btn btn-default btn-flat">SIM</a>
+                                    <a href="/ProntuarioMedico/loginMedico" class="btn btn-default btn-flat">SIM</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="" class="btn btn-default btn-flat">NÃO</a>
@@ -114,22 +114,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header"></li>
                 <!-- Optionally, you can add icons to the links -->
-                <li><a href="ExibeMedico.php"><i class="fa fa-fw fa-user-md"></i> <span>Médicos</span></a></li>
-                <li class="active"><a href="ExibePaciente.php"><i class="ion ion-person-add"></i> <span>Pacientes</span></a></li>
-                <li><a href="ExibeAtend.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimentos</span></a></li>
-                <li><a href="ExibeAgend.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
-                <li class="treeview">
-                    <a><i class="fa fa-user-plus"></i> <span>Inserir</span>
-                        <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="Medico.php"> <i class="fa fa-fw fa-user-md"></i> Médico</a></li>
-                        <li><a href="Paciente.php"> <i class="ion ion-person-add"></i> Paciente</a></li>
-                        <li><a href="Agendamento.php"> <i class="fa fa-book"></i> Agendamento</a></li>
-                    </ul>
-                </li>
+                <li class="active"><a href="ExibePacMed.php"><i class="ion ion-person-add"></i> <span>Pacientes</span></a></li>
+                <li><a href="ExibeAtendMed.php"><i class="fa fa-fw fa-stethoscope"></i> <span>Atendimentos</span></a></li>
+                <li><a href="ExibeAgendMed.php"><i class="fa fa-book"></i> <span>Agendamentos</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -175,18 +162,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                           <td>$row->cpf</td>
                                           <td>$row->rg</td>
                                           <td align=\"center\">
-                                        <a href=\"TimeLine.php?id=$row->cpf \" <button type=\"button\" class=\"btn btn-info\">
+                                        <a href=\"TimeLineMed.php?id=$row->cpf \" <button type=\"button\" class=\"btn btn-info\">
                                             Histórico
                                         </button>
                                         </a>
-                                        <a href=\"EditPaciente.php?cpf=$row->cpf \" <button type=\"button\" class=\"btn btn-warning\">
-                                            Editar
-                                        </button>
-                                        </a>
-
-                                        <button type=\"button\" class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#modal-default\">
-                                            Deletar
-                                        </button>
                                         
                             <div class=\"modal modal-default fade\" id=\"modal-default\">
                                 <div class=\"modal-dialog\">
@@ -368,84 +347,4 @@ scratch. This page gets rid of all links and provides the needed markup only.
     })
 </script>
 </body>
-<?php
-
-if (!empty($_GET['valor'])) {
-    $resultado = $_GET['valor'];
-
-    if ($resultado == 1) {
-        ?>
-
-        <script>
-            $(document).ready(function () {
-                $("#modal-info-cad").modal();
-            });
-        </script>
-    <?php
-
-    }elseif ($resultado == 2){
-    ?>
-
-        <script>
-            $(document).ready(function () {
-                $("#modal-danger-cad").modal();
-            });
-        </script>
-
-        <?php
-    }
-}
-
-if (!empty($_GET['valorEdit'])) {
-    $resultado = $_GET['valorEdit'];
-
-    if ($resultado == 1) {
-        ?>
-
-        <script>
-            $(document).ready(function () {
-                $("#modal-info").modal();
-            });
-        </script>
-    <?php
-
-    }elseif ($resultado == 2){
-    ?>
-
-        <script>
-            $(document).ready(function () {
-                $("#modal-danger").modal();
-            });
-        </script>
-
-        <?php
-    }
-}
-
-if (!empty($_GET['valorDel'])) {
-    $resultado = $_GET['valorDel'];
-
-    if ($resultado == 1) {
-        ?>
-
-        <script>
-            $(document).ready(function () {
-                $("#modal-info-del").modal();
-            });
-        </script>
-    <?php
-
-    }elseif ($resultado == 2){
-    ?>
-
-        <script>
-            $(document).ready(function () {
-                $("#modal-danger-del").modal();
-            });
-        </script>
-
-        <?php
-    }
-}
-?>
 </html>

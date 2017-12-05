@@ -160,8 +160,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Paciente(s)</th>
                                     <th>Médico(s)</th>
+                                    <th>Paciente(s)</th>
                                     <th>Data</th>
                                     <th>Horário</th>
                                     <th>Opções</th>

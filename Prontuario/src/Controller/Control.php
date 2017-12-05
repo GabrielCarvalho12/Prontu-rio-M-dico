@@ -10,6 +10,7 @@ class Control
     public $espec;
     public $medicos;
     public $pacientes;
+    public $PacNome;
 
     public function EditPaciente($cpf)
     {
@@ -46,11 +47,20 @@ class Control
         $this->query = $con->getResult();
     }
 
+    public function TimeLine($cpf)
+    {
+        $con = new Conexao();
+        $con->SelectTimeLine($cpf);
+        $this->PacNome= $con->getNomePac();
+        $this->query = $con->getResult();
+    }
+
     public function consultas()
     {
         $con = new Conexao();
         $con->SelectConsultas();
         $this->query = $con->getResult();
+
     }
 
     public function estados()
@@ -80,27 +90,5 @@ class Control
         $con->SelectEpec();
         $this->espec = $con->getQueryEsp();
     }
-
-
-
-    /*    public $ResultEditar;
-        public $ResultForm;
-
-        function SelectEditar($id)
-        {
-            $con = new Conexao();
-            $con->Construct();
-            $con->SelectUpdate($id);
-            $this->ResultEditar=$con->getResult();
-            $this->Banco=$con->getBanco();
-        }
-
-        function SelectForm()
-        {
-            $con = new conexao();
-            $con->Construct();
-            $con->Select();
-            $this->ResultForm = $con->getResult();
-        }*/
 
 }
